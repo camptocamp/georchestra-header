@@ -3,6 +3,12 @@ import { computed, onMounted, reactive } from 'vue'
 import { getUserDetails } from './auth'
 import type { User } from './auth'
 import UserIcon from './ui/UserIcon.vue'
+import LoginIcon from './ui/LoginIcon.vue'
+import LogoutIcon from './ui/LogoutIcon.vue'
+import CatalogIcon from './ui/CatalogIcon.vue'
+import MapIcon from './ui/MapIcon.vue'
+import ConsoleIcon from './ui/ConsoleIcon.vue'
+import AnalyticsIcon from './ui/AnalyticsIcon.vue'
 
 const props = defineProps<{
   lang?: string
@@ -32,60 +38,67 @@ onMounted(() => {
 </script>
 <template>
   <header class="host">
-    <div
-      class="admin pr-8 items-center bg-primary/20 text-secondary/80 flex justify-end gap-5 text-sm font-sans"
-      v-if="isAdmin"
-    >
-      <div class="py-1 bg-secondary/80 text-slate-100 px-8">Administration</div>
-      <a
-        href="/geonetwork/srv/fre/admin.console"
-        class="catalog py-1 hover:text-secondary/60"
-        v-if="adminRoles?.catalog"
-        >catalog</a
-      >
-      <a
-        href="/mapstore/#/admin"
-        v-if="adminRoles?.viewer"
-        class="py-1 hover:text-secondary/60"
-        >mapstore</a
-      >
-      <a
-        href="/console/manager"
-        v-if="adminRoles?.console"
-        class="console py-1 hover:text-secondary/60"
-        >console</a
-      >
-      <a href="/analytics/" class="console py-1 hover:text-secondary/60"
-        >analytics</a
-      >
-    </div>
-    <div class="h-20 flex justify-between text-slate-600">
-      <div class="flex">
-        <a href="/" class="flex justify-center items-center px-8 bg-primary/10">
-          <img
-            src="https://www.georchestra.org/public/georchestra-logo.svg"
-            alt="geOrchestra logo"
-            class="w-32"
-          />
-        </a>
-        <nav class="flex justify-center items-center font-semibold">
-          <a class="nav-item" href="/datahub/">Data</a>
-          <a class="nav-item" href="/mapstore/">Viewer</a>
-          <a class="nav-item" href="/mapstore/#/home">Maps</a>
-          <a class="nav-item" href="/geoserver/">Services</a>
-          <a v-if="!isAnonymous" class="nav-item" href="/import/">Import</a>
-        </nav>
-      </div>
-      <div class="mr-8 flex justify-center items-center">
-        <div v-if="!isAnonymous" class="flex gap-4 items-baseline">
-          <a class="link-btn" href="/console/account/userdetails">
-            <UserIcon class="font-bold text-3xl inline-block mr-4"></UserIcon>
-            <span>{{ state.user?.username }}</span></a
+    <div class="flex justify-between">
+      <a href="/" class="flex justify-center items-center pl-48 py-4">
+        <img
+          src="https://www.toutsurmoneau.fr/var/ezwebin_site/storage/original/image/d59d58b15762109fe162badb65494510.svg"
+          alt="suez logo"
+          class="w-48"
+        />
+      </a>
+      <div class="flex pr-8 items-center">
+        <div
+          v-if="isAdmin"
+          class="pr-8 flex justify-end gap-5 text-sm font-sans"
+        >
+          <a
+            href="/geonetwork/srv/fre/admin.console"
+            class="btn catalog py-1"
+            v-if="adminRoles?.catalog"
+            ><CatalogIcon class="icon mr-4"></CatalogIcon>catalog</a
           >
-          <a class="link-btn" :href="logoutUrl">logout</a>
+          <a href="/mapstore/#/admin" v-if="adminRoles?.viewer" class="btn py-1"
+            ><MapIcon class="icon mr-4"></MapIcon>mapstore</a
+          >
+          <a
+            href="/console/manager"
+            v-if="adminRoles?.console"
+            class="btn console py-1"
+            ><ConsoleIcon class="icon mr-4"></ConsoleIcon>console</a
+          >
+          <a href="/analytics/" class="btn console py-1"
+            ><AnalyticsIcon class="icon mr-4"></AnalyticsIcon>analytics</a
+          >
         </div>
-        <a v-else class="btn" :href="loginUrl">login</a>
+
+        <div v-if="!isAnonymous" class="flex gap-4">
+          <a class="btn" :href="logoutUrl" title="logout"
+            ><LogoutIcon class="icon"></LogoutIcon
+          ></a>
+          <a
+            class="btn align-middle"
+            href="/console/account/userdetails"
+            title="compte"
+          >
+            <UserIcon class="icon"></UserIcon>
+          </a>
+        </div>
+        <a v-else class="btn" :href="loginUrl" title="login"
+          ><LoginIcon class="icon"></LoginIcon
+        ></a>
       </div>
+    </div>
+
+    <div class="">
+      <nav
+        class="pl-48 flex justify-start items-center font-semibold text-white bg-primary"
+      >
+        <a class="nav-item pl-0" href="/datahub/">Consulter le catalogue</a>
+        <a class="nav-item" href="/mapstore/">Visualiser</a>
+        <a class="nav-item" href="/mapstore/#/home">Créer une carte</a>
+        <a class="nav-item" href="/geoserver/">Web Services</a>
+        <a v-if="!isAnonymous" class="nav-item" href="/import/">Import</a>
+      </nav>
     </div>
   </header>
 </template>
@@ -108,13 +121,13 @@ onMounted(() => {
 
 @layer components {
   .nav-item {
-    @apply px-6 hover:bg-primary/70 hover:text-slate-100 transition-colors leading-[5];
+    @apply h-16 px-8 hover:bg-primary/70 hover:text-slate-300 transition-colors leading-[4];
   }
   .btn {
-    @apply px-4 py-2 text-slate-100 bg-primary rounded hover:bg-primary/70 transition-colors;
+    @apply px-4 py-2 text-primary border rounded-3xl hover:bg-primary/30 transition-colors;
   }
-  .link-btn {
-    @apply text-primary/70 hover:underline underline-offset-8 decoration-2 decoration-primary/50;
+  .icon {
+    @apply font-bold text-3xl inline-block;
   }
 }
 </style>
