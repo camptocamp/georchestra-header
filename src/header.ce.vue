@@ -61,7 +61,7 @@ onMounted(() => {
             ><MapIcon class="icon mr-4"></MapIcon>mapstore</a
           >
           <a
-            href="/console/manager"
+            href="/console/manager/"
             v-if="adminRoles?.console"
             class="btn console py-1"
             ><ConsoleIcon class="icon mr-4"></ConsoleIcon>console</a
