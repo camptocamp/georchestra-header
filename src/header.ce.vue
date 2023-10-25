@@ -29,12 +29,22 @@ const loginUrl = computed(() => {
   return current.toString()
 })
 const logoutUrl = computed(() => '/logout')
+const fontFamily = 'Roboto Condensed'
 
 onMounted(() => {
+  loadFont(fontFamily)
   getUserDetails().then(user => {
     state.user = user
   })
 })
+
+function loadFont(font: string) {
+  const link = document.createElement('link')
+  link.type = 'text/css'
+  link.rel = 'stylesheet'
+  document.head.appendChild(link)
+  link.href = `https://fonts.googleapis.com/css?family=${font}`
+}
 </script>
 <template>
   <header class="host">
@@ -113,9 +123,10 @@ onMounted(() => {
   -webkit-text-size-adjust: 100%;
   -moz-tab-size: 4;
   tab-size: 4;
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-family: v-bind(fontFamily), sans-serif, ui-sans-serif, system-ui,
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
   font-feature-settings: normal;
 }
 
