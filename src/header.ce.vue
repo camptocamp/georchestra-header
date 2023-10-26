@@ -13,6 +13,7 @@ import AnalyticsIcon from './ui/AnalyticsIcon.vue'
 const props = defineProps<{
   lang?: string
   activeApp?: string
+  logoUrl?: string
 }>()
 
 const state = reactive({
@@ -50,11 +51,7 @@ function loadFont(font: string) {
   <header class="host">
     <div class="flex justify-between">
       <a href="/" class="flex justify-center items-center pl-48 py-4">
-        <img
-          src="https://www.toutsurmoneau.fr/var/ezwebin_site/storage/original/image/d59d58b15762109fe162badb65494510.svg"
-          alt="suez logo"
-          class="w-48"
-        />
+        <img :src="props.logoUrl" alt="suez logo" class="w-48" />
       </a>
       <div class="flex pr-8 items-center">
         <div
