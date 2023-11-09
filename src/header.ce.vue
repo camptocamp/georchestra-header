@@ -49,7 +49,7 @@ function loadFont(font: string) {
 </script>
 <template>
   <header class="host">
-    <div class="flex justify-between">
+    <div class="flex justify-between bg-white">
       <a href="/" class="flex justify-center items-center pl-48 py-4">
         <img :src="props.logoUrl" alt="suez logo" class="w-48" />
       </a>
@@ -100,10 +100,10 @@ function loadFont(font: string) {
       <nav
         class="pl-48 flex justify-start items-center font-semibold text-white bg-primary"
       >
-        <a class="nav-item pl-0" href="/datahub/">Consulter le catalogue</a>
-        <a class="nav-item" href="/mapstore/">Visualiser</a>
-        <a class="nav-item" href="/mapstore/#/home">Créer une carte</a>
-        <a class="nav-item" href="/geoserver/">Web Services</a>
+        <a class="nav-item pl-0" href="/datahub/">Données</a>
+        <a class="nav-item" href="/mapstore/#/home">Réutilisations</a>
+        <a class="nav-item" href="/mapstore/">Studio</a>
+        <a class="nav-item" href="/geoserver/">API</a>
         <a v-if="!isAnonymous" class="nav-item" href="/import/">Import</a>
       </nav>
     </div>
