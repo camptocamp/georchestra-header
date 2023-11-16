@@ -62,7 +62,7 @@ function loadFont(font: string) {
             href="/geonetwork/srv/fre/admin.console"
             class="btn catalog py-1"
             v-if="adminRoles?.catalog"
-            ><CatalogIcon class="icon mr-4"></CatalogIcon>catalog</a
+            ><CatalogIcon class="icon mr-4"></CatalogIcon>catalogue</a
           >
           <a href="/mapstore/#/admin" v-if="adminRoles?.viewer" class="btn py-1"
             ><MapIcon class="icon mr-4"></MapIcon>mapstore</a
