@@ -16,12 +16,16 @@ interface WhoAmIResponse {
   GeorchestraUser: {
     roles: KNOWN_ROLES[]
     username: string
+    ldapWarn: boolean
+    ldapRemainingDays: string
   }
 }
 
 export interface User {
   username: string
   anonymous: boolean
+  warned: boolean
+  remainingDays: string
   adminRoles: AdminRoles | null
 }
 
@@ -40,6 +44,8 @@ export async function getUserDetails(): Promise<User> {
       const roles = user.roles
       return {
         username: user.username,
+        warned:  user.ldapWarn,
+        remainingDays:  user.ldapRemainingDays,
         anonymous: roles.indexOf('ROLE_ANONYMOUS') > -1,
         adminRoles: getAdminRoles(roles),
       }
