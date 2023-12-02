@@ -13,6 +13,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
+        format: 'iife',
         entryFileNames: `assets/header.js`,
       },
     },
@@ -20,7 +21,7 @@ export default defineConfig({
   server: {
     proxy: {
       '^/(whoami|\\?login|logout)': {
-        target: 'https://mel.integration.apps.gs-fr-prod.camptocamp.com',
+        target: 'https://demo.georchestra.org',
         changeOrigin: true,
       },
     },

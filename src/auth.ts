@@ -1,4 +1,5 @@
 const AUTH_API_URL = '/whoami'
+const CONSOLE_PLATFORM_API_URL = '/console/private/platform/infos'
 
 type KNOWN_ROLES =
   | 'ROLE_SUPERUSER'
@@ -15,12 +16,16 @@ interface WhoAmIResponse {
   GeorchestraUser: {
     roles: KNOWN_ROLES[]
     username: string
+    ldapWarn: boolean
+    ldapRemainingDays: string
   }
 }
 
 export interface User {
   username: string
   anonymous: boolean
+  warned: boolean
+  remainingDays: string
   adminRoles: AdminRoles | null
 }
 
@@ -39,6 +44,8 @@ export async function getUserDetails(): Promise<User> {
       const roles = user.roles
       return {
         username: user.username,
+        warned:  user.ldapWarn,
+        remainingDays:  user.ldapRemainingDays,
         anonymous: roles.indexOf('ROLE_ANONYMOUS') > -1,
         adminRoles: getAdminRoles(roles),
       }
@@ -59,4 +66,22 @@ export function getAdminRoles(roles: KNOWN_ROLES[]): AdminRoles | null {
     catalog,
     viewer,
   }
+}
+
+export interface PlatformInfos {
+  analyticsEnabled: boolean
+  extractorappEnabled: boolean
+  saslEnabled: boolean
+}
+
+export async function getPlatformInfos(): Promise<PlatformInfos> {
+  return fetch(CONSOLE_PLATFORM_API_URL)
+    .then(response => response.json())
+    .then((json: PlatformInfos) => {
+      return {
+        analyticsEnabled: json.analyticsEnabled,
+        extractorappEnabled: json.extractorappEnabled,
+        saslEnabled: json.saslEnabled,
+      }
+    })
 }
