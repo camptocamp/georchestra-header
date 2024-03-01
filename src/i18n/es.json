@@ -2,6 +2,7 @@
   "go.home": "volver al inicio",
   "logo": "geOrchestra",
   "catalogue": "catálogo",
+  "contributions": "contribuciones",
   "viewer": "visualizador",
   "maps": "aplicaciones",
   "datafeeder": "importar",
@@ -10,6 +11,7 @@
   "users": "usuarios",
   "logout": "Cerrar sesión",
   "login": "Iniciar sesión",
+  "pre.header.title": "El portal de datos abiertos de la región metropolitana",
   "remaining_days_msg_part1": "Solo quedan",
   "remaining_days_msg_part2": "días para",
   "remaining_days_msg_part3": "cambiar su contraseña"

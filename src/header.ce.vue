@@ -71,15 +71,24 @@ onMounted(() => {
       v-bind:style="props.style"
     ></iframe>
   </div>
-  <header v-else class="host h-[80px] text-base" v-bind:style="props.style">
+  <header v-else class="host h-[130px] text-base" v-bind:style="props.style">
     <link rel="stylesheet" :href="props.stylesheet" v-if="props.stylesheet" />
     <component :is="'style'" v-if="!props.stylesheet">
       header { --georchestra-header-primary: #85127e;
       --georchestra-header-secondary: #1b1f3b;
       --georchestra-header-primary-light: #85127e1a;
-      --georchestra-header-secondary-light: #1b1f3b1a; }
+      --georchestra-header-secondary-light: #1b1f3b1a;
+      --georchestra-header-primary-dark: #AB0107; }
     </component>
-    <div class="justify-between text-slate-600 sm:flex hidden h-full bg-white">
+
+    <div class="h-[40px] bg-primary flex pl-8 justify-center">
+      <span class="self-center text-white text-lg font-bold uppercase">{{
+        t('pre.header.title')
+      }}</span>
+    </div>
+    <div
+      class="justify-between text-slate-600 sm:flex hidden bg-white h-[90px]"
+    >
       <div class="flex">
         <a
           href="/"
@@ -100,7 +109,7 @@ onMounted(() => {
           <a
             class="nav-item"
             :class="{ active: props.activeApp === 'datahub' }"
-            href="/datahub/"
+            href="/catalogue/search"
             >{{ t('catalogue') }}</a
           >
           <a
@@ -116,10 +125,11 @@ onMounted(() => {
             >{{ t('maps') }}</a
           >
           <a
+            v-if="!isAnonymous"
             class="nav-item"
-            :class="{ active: props.activeApp === 'geoserver' }"
-            href="/geoserver/web/"
-            >{{ t('services') }}</a
+            :class="{ active: props.activeApp === 'geocontrib' }"
+            href="/geocontrib/"
+            >{{ t('contributions') }}</a
           >
           <a
             v-if="adminRoles?.import"
@@ -130,7 +140,9 @@ onMounted(() => {
           >
           <span class="text-gray-400" v-if="isAdmin">|</span>
           <div class="admin group inline-block relative" v-if="isAdmin">
-            <button class="nav-item after:hover:scale-x-0 flex items-center">
+            <button
+              class="nav-item after:scale-x-0 after:hover:scale-x-0 flex items-center"
+            >
               <span class="mr-2 first-letter:capitalize">{{ t('admin') }}</span>
               <ChevronDownIcon
                 class="w-4 h-4"
@@ -178,6 +190,25 @@ onMounted(() => {
                   <ChartPieIcon class="icon-dropdown"></ChartPieIcon>
                   analytics</a
                 >
+              </li>
+              <li :class="{ active: props.activeApp === 'geoserver' }">
+                <a href="/geoserver/web/">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="icon-dropdown"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m6.115 5.19.319 1.913A6 6 0 0 0 8.11 10.36L9.75 12l-.387.775c-.217.433-.132.956.21 1.298l1.348 1.348c.21.21.329.497.329.795v1.089c0 .426.24.815.622 1.006l.153.076c.433.217.956.132 1.298-.21l.723-.723a8.7 8.7 0 0 0 2.288-4.042 1.087 1.087 0 0 0-.358-1.099l-1.33-1.108c-.251-.21-.582-.299-.905-.245l-1.17.195a1.125 1.125 0 0 1-.98-.314l-.295-.295a1.125 1.125 0 0 1 0-1.591l.13-.132a1.125 1.125 0 0 1 1.3-.21l.603.302a.809.809 0 0 0 1.086-1.086L14.25 7.5l1.256-.837a4.5 4.5 0 0 0 1.528-1.732l.146-.292M6.115 5.19A9 9 0 1 0 17.18 4.64M6.115 5.19A8.965 8.965 0 0 1 12 3c1.929 0 3.716.607 5.18 1.64"
+                    />
+                  </svg>
+                  {{ t('services') }}
+                </a>
               </li>
             </ul>
           </div>
@@ -307,33 +338,43 @@ onMounted(() => {
   .nav-item-mobile {
     @apply text-xl block text-center py-3 w-full border-b border-b-slate-300 first-letter:capitalize;
   }
+
   .nav-item {
     @apply relative text-lg w-fit block after:hover:scale-x-[82%] px-2 mx-2 hover:text-black first-letter:capitalize;
   }
+
   .nav-item:after {
-    @apply block content-[''] absolute h-[3px] bg-gradient-to-r from-primary to-secondary-light w-full scale-x-0  transition duration-300 origin-left;
+    @apply block content-[''] absolute h-[3px] bg-primary w-full scale-x-[10%]  transition duration-300 origin-left;
   }
+
   .nav-item.active {
     @apply after:scale-x-[82%] after:bg-primary after:bg-none text-gray-900;
   }
+
   .btn {
-    @apply px-4 py-2 mx-2 text-slate-100 bg-primary rounded hover:bg-slate-700 transition-colors first-letter:capitalize;
+    @apply px-4 py-2 mx-2 text-slate-100 bg-primary rounded hover:bg-primary-dark transition-colors first-letter:capitalize;
   }
+
   .link-btn {
-    @apply text-primary hover:text-slate-700 hover:underline underline-offset-8 decoration-2 decoration-slate-700 flex flex-col items-center;
+    @apply text-primary hover:hover:text-primary-dark hover:underline underline-offset-8 decoration-2 hover:decoration-primary-dark flex flex-col items-center;
   }
+
   .admin-dropdown > li {
     @apply block text-center hover:bg-primary-light text-gray-700 hover:text-black capitalize;
   }
+
   .admin-dropdown > li > a {
     @apply block w-full h-full py-3;
   }
+
   .admin-dropdown > li.active {
     @apply bg-primary-light;
   }
+
   .icon-dropdown {
     @apply w-4 h-4 inline-block align-text-top;
   }
+
   * {
     -webkit-tap-highlight-color: transparent;
   }

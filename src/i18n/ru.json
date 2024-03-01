@@ -2,6 +2,7 @@
   "go.home": "домашняя страница",
   "logo": "geOrchestra",
   "catalogue": "Каталог",
+  "contributions": "Вклады",
   "viewer": "вьюера",
   "maps": "приложения",
   "datafeeder": "импортер",
@@ -10,6 +11,7 @@
   "users": "пользователи",
   "logout": "Отключение",
   "login": "Соединение",
+  "pre.header.title": "Портал открытых данных метрополитенского региона",
   "remaining_days_msg_part1": "Осталось всего",
   "remaining_days_msg_part2": "дня на",
   "remaining_days_msg_part3": "измените свой пароль"

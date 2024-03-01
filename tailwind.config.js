@@ -8,6 +8,7 @@ module.exports = {
         secondary: 'var(--georchestra-header-secondary)',
         'primary-light': 'var(--georchestra-header-primary-light)',
         'secondary-light': 'var(--georchestra-header-secondary-light)',
+        'primary-dark': 'var(--georchestra-header-primary-dark)',
       },
     },
   },

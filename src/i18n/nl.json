@@ -2,6 +2,7 @@
   "go.home": "startpagina",
   "logo": "geOrchestra",
   "catalogue": "catalogus",
+  "contributions": "bijdragen",
   "viewer": "viewer",
   "maps": "applicaties",
   "datafeeder": "importeren",
@@ -10,6 +11,7 @@
   "users": "gebruikers",
   "logout": "Uitloggen",
   "login": "Log in",
+  "pre.header.title": "De opendata portal van de metropoolregio",
   "remaining_days_msg_part1": "Nog maar",
   "remaining_days_msg_part2": "dagen om te",
   "remaining_days_msg_part3": "verander uw wachtwoord"
