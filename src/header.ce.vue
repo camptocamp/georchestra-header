@@ -224,7 +224,7 @@ onMounted(() => {
       <div class="flex justify-center items-center mx-6">
         <div v-if="!isAnonymous" class="flex gap-4 items-baseline">
           <a
-            class="link-btn hover:text-primary-dark"
+            class="link-btn"
             href="/console/account/userdetails"
             :title="`${state.user?.firstname} ${state.user?.lastname}`"
           >
@@ -233,15 +233,11 @@ onMounted(() => {
               `${state.user?.firstname} ${state.user?.lastname}`
             }}</span></a
           >
-          <a
-            class="link-btn hover:text-primary-dark hover:decoration-primary-dark"
-            :href="logoutUrl"
+          <a class="link-btn" :href="logoutUrl"
             ><span class="first-letter:capitalize">{{ t('logout') }}</span></a
           >
         </div>
-        <a v-else class="btn hover:bg-primary-dark" :href="loginUrl">{{
-          t('login')
-        }}</a>
+        <a v-else class="btn" :href="loginUrl">{{ t('login') }}</a>
       </div>
     </div>
     <div class="flex-col sm:hidden w-full h-full">
@@ -350,11 +346,11 @@ onMounted(() => {
   }
 
   .btn {
-    @apply px-4 py-2 mx-2 text-slate-100 bg-primary rounded hover:bg-slate-700 transition-colors first-letter:capitalize;
+    @apply px-4 py-2 mx-2 text-slate-100 bg-primary rounded hover:bg-primary-dark transition-colors first-letter:capitalize;
   }
 
   .link-btn {
-    @apply text-primary hover:text-slate-700 hover:underline underline-offset-8 decoration-2 decoration-slate-700 flex flex-col items-center;
+    @apply text-primary hover:hover:text-primary-dark hover:underline underline-offset-8 decoration-2 hover:decoration-primary-dark flex flex-col items-center;
   }
 
   .admin-dropdown > li {
