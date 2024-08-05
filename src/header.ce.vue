@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive } from 'vue'
-import { getUserDetails, getPlatformInfos } from './auth'
+import { getUserDetails, getPlatformInfos, getGeocontribPermissions } from './auth'
 import type { User, PlatformInfos } from './auth'
 import UserIcon from './ui/UserIcon.vue'
 import GeorchestraLogo from './ui/GeorchestraLogo.vue'
@@ -25,6 +25,7 @@ const props = defineProps<{
 
 const state = reactive({
   user: null as null | User,
+  geocontribPermissions: null as null | any,
   mobileMenuOpen: false,
   lang3: props.lang,
   platformInfos: null as null | PlatformInfos,
@@ -46,6 +47,9 @@ const logoutUrl = computed(() => '/logout')
 function toggleMenu(): void {
   state.mobileMenuOpen = !state.mobileMenuOpen
 }
+function geocontribProjectPathname(): string {
+  return `/geocontrib/projet/${state.geocontribPermissions?.project}`
+}
 
 onMounted(() => {
   state.lang3 =
@@ -58,6 +62,9 @@ onMounted(() => {
         platformInfos => (state.platformInfos = platformInfos)
       )
     }
+  })
+  getGeocontribPermissions().then(permissions => {
+    state.geocontribPermissions = permissions
   })
 })
 </script>
@@ -125,19 +132,63 @@ onMounted(() => {
             >{{ t('maps') }}</a
           >
           <a
-            v-if="!isAnonymous"
-            class="nav-item"
-            :class="{ active: props.activeApp === 'geocontrib' }"
-            href="/geocontrib/"
-            >{{ t('contributions') }}</a
-          >
-          <a
             v-if="adminRoles?.import"
             class="nav-item"
             href="/import/"
             :class="{ active: props.activeApp === 'import' }"
             >{{ t('datafeeder') }}</a
           >
+          <a
+            v-if="!isAnonymous && !state.geocontribPermissions?.project"
+            class="nav-item"
+            :class="{ active: props.activeApp === 'geocontrib' }"
+            href="/geocontrib/"
+            >{{ t('contributions') }}</a
+          >
+          <a class="admin group inline-block relative" v-if="!isAnonymous && state.geocontribPermissions?.project" href="/geocontrib/">
+            <button
+              class="nav-item after:scale-x-0 after:hover:scale-x-0 flex items-center"
+            >
+              <span class="mr-2 first-letter:capitalize">{{ t('contributions') }}</span>
+              <ChevronDownIcon
+                class="w-4 h-4"
+                stroke-width="4"
+              ></ChevronDownIcon>
+            </button>
+            <ul
+              class="absolute hidden group-hover:block border rounded w-full admin-dropdown z-[1002] bg-white"
+            >
+              <li>
+                <a
+                  class="catalog"
+                  :href="geocontribProjectPathname()"
+                >Projet: Accueil</a
+                >
+              </li>
+              <li>
+                <a
+                  class="catalog"
+                  :href="geocontribProjectPathname() + '/signalement/lister'"
+                >Projet: Liste & Carte</a
+                >
+              </li>
+              <li>
+                <a
+                  class="catalog"
+                  v-if="state.geocontribPermissions?.admin"
+                  :href="geocontribProjectPathname() + '/administration-carte'"
+                >Projet: Fonds cartographiques</a
+                >
+              </li><li>
+                <a
+                  class="catalog"
+                  v-if="state.geocontribPermissions?.admin"
+                  :href="geocontribProjectPathname() + '/membres'"
+                >Projet: Membres</a
+                >
+              </li>
+            </ul>
+          </a>
           <span class="text-gray-400" v-if="isAdmin">|</span>
           <div class="admin group inline-block relative" v-if="isAdmin">
             <button

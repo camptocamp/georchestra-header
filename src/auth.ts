@@ -1,5 +1,6 @@
 const AUTH_API_URL = '/whoami'
 const CONSOLE_PLATFORM_API_URL = '/console/private/platform/infos'
+const GEOCONTRIB_API_URL = '/geocontrib/api'
 
 type KNOWN_ROLES =
   | 'ROLE_SUPERUSER'
@@ -110,3 +111,22 @@ export async function getPlatformInfos(): Promise<PlatformInfos> {
       }
     })
 }
+
+export async function getGeocontribPermissions(): Promise<any> {
+
+  const user_info_req = fetch(`${GEOCONTRIB_API_URL}/user_info`).then(response => response.json());
+  const user_level_project_req = fetch(`${GEOCONTRIB_API_URL}/user-level-projects`).then(response => response.json());
+
+  return Promise.all([user_info_req, user_level_project_req])
+    .then((res: any) => {
+      const user_info = res[0]
+      const user_level_project = res[1]
+      const isProjectPage = window.location.pathname.indexOf('/geocontrib/projet/') > -1
+      const project = isProjectPage ? window.location.pathname.match(/\/geocontrib\/projet\/([^/]*)/)?.[1] : null
+      return {
+        project: project,
+        admin: user_info.user.is_administrator || user_info.user.is_superuser || (project && user_level_project[project] === 'Administrateur projet')
+      }
+    })
+}
+
