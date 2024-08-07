@@ -62,9 +62,11 @@ onMounted(() => {
         platformInfos => (state.platformInfos = platformInfos)
       )
     }
-  })
-  getGeocontribPermissions().then(permissions => {
-    state.geocontribPermissions = permissions
+    if(!user?.anonymous) {
+      getGeocontribPermissions().then(permissions => {
+        state.geocontribPermissions = permissions
+      })
+    }
   })
 })
 </script>
