@@ -189,6 +189,14 @@ onMounted(() => {
                 >Projet: Membres</a
                 >
               </li>
+              <li>
+                <a
+                  class="catalog"
+                  v-if="state.geocontribPermissions?.admin"
+                  href="/geocontrib/my_account"
+                >Mon compte Geocontrib</a
+                >
+              </li>
             </ul>
           </a>
           <span class="text-gray-400" v-if="isAdmin">|</span>
@@ -368,6 +376,9 @@ onMounted(() => {
           <a v-if="!isAnonymous" class="nav-item-mobile" href="/import/">{{
             t('datafeeder')
           }}</a>
+          <a v-if="!isAnonymous" href="/geocontrib/" class="nav-item-mobile">
+              {{ t('contributions') }}</a
+            >
         </nav>
       </div>
     </div>
