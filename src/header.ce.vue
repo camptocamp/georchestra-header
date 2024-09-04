@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive } from 'vue'
-import { getUserDetails, getPlatformInfos } from './auth'
+import {
+  getUserDetails,
+  getPlatformInfos,
+  getGeocontribPermissions,
+} from './auth'
 import type { User, PlatformInfos } from './auth'
 import UserIcon from './ui/UserIcon.vue'
 import GeorchestraLogo from './ui/GeorchestraLogo.vue'
@@ -25,6 +29,7 @@ const props = defineProps<{
 
 const state = reactive({
   user: null as null | User,
+  geocontribPermissions: null as null | any,
   mobileMenuOpen: false,
   lang3: props.lang,
   platformInfos: null as null | PlatformInfos,
@@ -46,6 +51,13 @@ const logoutUrl = computed(() => '/logout')
 function toggleMenu(): void {
   state.mobileMenuOpen = !state.mobileMenuOpen
 }
+function geocontribProjectPathname(): string {
+  return `/geocontrib/projet/${state.geocontribPermissions?.project}`
+}
+
+function locationEndsWith(end: string): boolean {
+  return window.location.href.endsWith(end)
+}
 
 onMounted(() => {
   state.lang3 =
@@ -57,6 +69,11 @@ onMounted(() => {
       getPlatformInfos().then(
         platformInfos => (state.platformInfos = platformInfos)
       )
+    }
+    if (!user?.anonymous) {
+      getGeocontribPermissions().then(permissions => {
+        state.geocontribPermissions = permissions
+      })
     }
   })
 })
@@ -125,19 +142,115 @@ onMounted(() => {
             >{{ t('maps') }}</a
           >
           <a
-            v-if="!isAnonymous"
-            class="nav-item"
-            :class="{ active: props.activeApp === 'geocontrib' }"
-            href="/geocontrib/"
-            >{{ t('contributions') }}</a
-          >
-          <a
             v-if="adminRoles?.import"
             class="nav-item"
             href="/import/"
             :class="{ active: props.activeApp === 'import' }"
             >{{ t('datafeeder') }}</a
           >
+          <li
+            class="admin group/projects inline-block relative"
+            v-if="!isAnonymous"
+          >
+            <button
+              class="nav-item after:scale-x-0 after:hover:scale-x-0 flex items-center"
+            >
+              <span class="mr-2 first-letter:capitalize">{{
+                t('contributions')
+              }}</span>
+              <ChevronDownIcon
+                class="w-4 h-4"
+                stroke-width="4"
+              ></ChevronDownIcon>
+            </button>
+            <ul
+              class="absolute hidden group-hover/projects:block border rounded w-full admin-dropdown z-[1002] bg-white"
+            >
+              <li :class="{ active: locationEndsWith('/geocontrib/') }">
+                <a href="/geocontrib/">Tous les projets</a>
+              </li>
+
+              <li
+                :class="{ active: locationEndsWith('/geocontrib/my_account') }"
+              >
+                <a href="/geocontrib/my_account">Mon compte Geocontrib</a>
+              </li>
+              <li
+                class="admin group/item inline-block relative"
+                v-if="!isAnonymous && state.geocontribPermissions?.project"
+              >
+                <button
+                  class="nav-item after:scale-x-0 after:hover:scale-x-0 flex items-center"
+                >
+                  <span class="mr-2 first-letter:capitalize">Projet</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="4"
+                    stroke="currentColor"
+                    class="w-4 h-4"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                    />
+                  </svg>
+                </button>
+                <ul
+                  class="absolute hidden group-hover/item:block border rounded w-full admin-dropdown z-[1002] bg-white left-full top-0"
+                >
+                  <li
+                    v-if="state.geocontribPermissions?.project"
+                    :class="{
+                      active: locationEndsWith(geocontribProjectPathname()),
+                    }"
+                  >
+                    <a :href="geocontribProjectPathname()">Accueil</a>
+                  </li>
+                  <li
+                    v-if="state.geocontribPermissions?.project"
+                    :class="{ active: locationEndsWith('/signalement/lister') }"
+                  >
+                    <a
+                      :href="
+                        geocontribProjectPathname() + '/signalement/lister'
+                      "
+                      >Liste & Carte</a
+                    >
+                  </li>
+                  <li
+                    :class="{
+                      active: locationEndsWith('/administration-carte'),
+                    }"
+                  >
+                    <a
+                      v-if="
+                        state.geocontribPermissions?.project &&
+                        state.geocontribPermissions?.admin
+                      "
+                      :href="
+                        geocontribProjectPathname() + '/administration-carte'
+                      "
+                      >Fonds cartographiques</a
+                    >
+                  </li>
+                  <li :class="{ active: locationEndsWith('/membres') }">
+                    <a
+                      v-if="
+                        state.geocontribPermissions?.project &&
+                        state.geocontribPermissions?.admin
+                      "
+                      :href="geocontribProjectPathname() + '/membres'"
+                    >
+                      Membres</a
+                    >
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
           <span class="text-gray-400" v-if="isAdmin">|</span>
           <div class="admin group inline-block relative" v-if="isAdmin">
             <button
@@ -315,6 +428,9 @@ onMounted(() => {
           <a v-if="!isAnonymous" class="nav-item-mobile" href="/import/">{{
             t('datafeeder')
           }}</a>
+          <a v-if="!isAnonymous" href="/geocontrib/" class="nav-item-mobile">
+            {{ t('contributions') }}</a
+          >
         </nav>
       </div>
     </div>
@@ -363,7 +479,8 @@ onMounted(() => {
     @apply block text-center hover:bg-primary-light text-gray-700 hover:text-black capitalize;
   }
 
-  .admin-dropdown > li > a {
+  .admin-dropdown > li > a,
+  button {
     @apply block w-full h-full py-3;
   }
 
