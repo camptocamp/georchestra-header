@@ -167,13 +167,15 @@ onMounted(() => {
               class="absolute hidden group-hover/projects:block border rounded w-full admin-dropdown z-[1002] bg-white"
             >
               <li :class="{ active: locationEndsWith('/geocontrib/') }">
-                <a href="/geocontrib/">Tous les projets</a>
+                <a href="/geocontrib/" class="normal-case">Tous les projets</a>
               </li>
 
               <li
                 :class="{ active: locationEndsWith('/geocontrib/my_account') }"
               >
-                <a href="/geocontrib/my_account">Mon compte Geocontrib</a>
+                <a href="/geocontrib/my_account" class="normal-case"
+                  >Mon compte Geocontrib</a
+                >
               </li>
               <li
                 class="admin group/item inline-block relative"
