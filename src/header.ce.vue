@@ -366,7 +366,7 @@ onMounted(() => {
   }
 
   .nav-item.active {
-    @apply after:scale-x-[82%] after:bg-[#fed140] after:bg-none text-gray-900;
+    @apply after:scale-x-[82%] after:bg-black after:bg-none text-gray-900;
   }
 
   .btn {
@@ -378,7 +378,7 @@ onMounted(() => {
   }
 
   .admin-dropdown > li {
-    @apply block text-center hover:bg-[#fee49b] text-gray-700 hover:text-black capitalize;
+    @apply block text-center hover:bg-black text-gray-700 hover:text-[#bbbbbb] capitalize;
   }
 
   .admin-dropdown > li > a {
@@ -386,7 +386,7 @@ onMounted(() => {
   }
 
   .admin-dropdown > li.active {
-    @apply bg-[#fed140];
+    @apply bg-black text-white;
   }
 
   .icon-dropdown {
