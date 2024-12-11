@@ -112,7 +112,7 @@ onMounted(() => {
           <a
             class="nav-item"
             :class="{ active: props.activeApp === 'other-resources' }"
-            href="/public/apis"
+            href="/ressources/cartes/"
             >Autres ressources</a
           >
           <a
