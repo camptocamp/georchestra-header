@@ -366,7 +366,7 @@ onMounted(() => {
   }
 
   .nav-item.active {
-    @apply after:scale-x-[82%] after:bg-black after:bg-none text-gray-900;
+    @apply after:scale-x-[82%] after:bg-black after:bg-none text-gray-900 cursor-pointer pointer-events-none;
   }
 
   .btn {
