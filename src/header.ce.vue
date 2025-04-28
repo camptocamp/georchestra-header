@@ -2,7 +2,6 @@
 import { computed, onMounted, reactive } from 'vue'
 import { getUserDetails, getPlatformInfos } from './auth'
 import type { User, PlatformInfos } from './auth'
-import UserIcon from './ui/UserIcon.vue'
 import GeorchestraLogo from '@/ui/GeorchestraLogo.vue'
 import ChevronDownIcon from '@/ui/ChevronDownIcon.vue'
 import { getI18n, t } from '@/i18n'

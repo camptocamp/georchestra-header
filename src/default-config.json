@@ -10,8 +10,7 @@
       "ROLE_MAPSTORE_ADMIN"
     ],
     "stylesheet": "/public/georchestra.css",
-    "logoUrl": "/public/logo-g2f.png",
-    "hideLogin": false
+    "logoUrl": "/public/logo-g2f.png"
   },
   "defaultMenu": [
     {
