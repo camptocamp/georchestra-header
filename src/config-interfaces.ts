@@ -27,6 +27,8 @@ export interface Dropdown extends MenuItem {
   i18n?: string
   //List of items to display in the dropdown
   items?: Array<Link>
+  //Used to display the title of selected item in the dropdown label
+  itemSelectedTitle?: boolean
 }
 
 export interface Separator extends MenuItem {}

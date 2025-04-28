@@ -12,5 +12,7 @@
   "login": "Log in",
   "remaining_days_msg_part1": "Nog maar",
   "remaining_days_msg_part2": "dagen om te",
-  "remaining_days_msg_part3": "verander uw wachtwoord"
+  "remaining_days_msg_part3": "verander uw wachtwoord",
+  "toolbox": "gereedschapskist",
+  "my_dashboard": "Mijn dashboard"
 }

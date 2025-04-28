@@ -12,5 +12,7 @@
   "login": "login",
   "remaining_days_msg_part1": "Only",
   "remaining_days_msg_part2": "days left to",
-  "remaining_days_msg_part3": "change your password"
+  "remaining_days_msg_part3": "change your password",
+  "toolbox": "Toolbox",
+  "my_dashboard": "My dashboard"
 }

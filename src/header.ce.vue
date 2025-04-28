@@ -8,6 +8,7 @@ import ChevronDownIcon from '@/ui/ChevronDownIcon.vue'
 import { getI18n, t } from '@/i18n'
 import type { Link, Separator, Dropdown, Config } from '@/config-interfaces'
 import { defaultMenu, defaultConfig } from '@/default-config.json'
+import DashboardIcon from '@/ui/DashboardIcon.vue'
 
 const props = defineProps<{
   activeApp?: string
@@ -125,6 +126,13 @@ function toggleDropdown(index: number) {
   state.activeDropdown = state.activeDropdown === index ? null : index
 }
 
+function getItemSelectedTitle(items: Array<Link> | undefined): string {
+  const selectedItem = items?.find(
+    item => item.activeAppUrl === state.activeAppUrl
+  )
+  return selectedItem ? t(selectedItem.i18n || selectedItem.label) : ''
+}
+
 onMounted(() => {
   if (props.legacyHeader !== 'true') {
     getUserDetails().then(user => {
@@ -185,7 +193,7 @@ onMounted(() => {
       --georchestra-header-secondary-light: #1b1f3b1a; }
     </component>
     <div
-      class="justify-between text-slate-600 md:flex hidden h-full bg-white md:text-sm"
+      class="justify-between text-slate-600 md:flex hidden h-full bg-white md:text-sm mx-6"
     >
       <div class="flex header-left">
         <a
@@ -243,11 +251,20 @@ onMounted(() => {
                 <button
                   class="nav-item after:hover:scale-x-0 flex items-center"
                 >
-                  <span class="lg:mr-2 md:mr-1 first-letter:capitalize">{{
-                    (item as Dropdown).i18n
-                      ? t((item as Dropdown).i18n)
-                      : (item as Dropdown).label
-                  }}</span>
+                  <span
+                    v-if="(item as Dropdown).itemSelectedTitle && getItemSelectedTitle((item as Dropdown).items)"
+                    class="lg:mr-2 md:mr-1 first-letter:capitalize"
+                    >{{ getItemSelectedTitle((item as Dropdown).items) }}</span
+                  >
+                  <span
+                    v-else
+                    class="lg:mr-2 md:mr-1 first-letter:capitalize"
+                    >{{
+                      (item as Dropdown).i18n
+                        ? t((item as Dropdown).i18n)
+                        : (item as Dropdown).label
+                    }}</span
+                  >
                   <ChevronDownIcon
                     class="w-4 h-4"
                     stroke-width="4"
@@ -301,21 +318,14 @@ onMounted(() => {
         </nav>
       </div>
       <div class="flex justify-center items-center mx-6 header-right">
-        <div v-if="!isAnonymous" class="flex gap-4 items-baseline">
-          <a
-            class="link-btn"
-            href="/console/account/userdetails"
-            :title="`${state.user?.firstname} ${state.user?.lastname}`"
-          >
-            <UserIcon class="font-bold text-3xl inline-block"></UserIcon>
-            <span class="text-xs max-w-[120px] truncate">{{
-              `${state.user?.firstname} ${state.user?.lastname}`
-            }}</span></a
-          >
-          <a class="link-btn" :href="logoutUrl"
-            ><span class="first-letter:capitalize">{{ t('logout') }}</span></a
-          >
-        </div>
+        <a
+          v-if="!isAnonymous"
+          class="btn flex items-center justify-center"
+          href="/portal/mycraft"
+        >
+          <DashboardIcon class="w-4 h-4 mr-2" stroke-width="4"></DashboardIcon>
+          {{ t('my_dashboard') }}</a
+        >
         <a
           v-if="!state.config.hideLogin && isAnonymous"
           class="btn"
@@ -369,15 +379,9 @@ onMounted(() => {
           </span>
         </div>
         <div class="flex justify-center items-center">
-          <div v-if="!isAnonymous" class="flex gap-4 items-baseline">
-            <a class="link-btn" href="/console/account/userdetails">
-              <UserIcon class="font-bold text-3xl inline-block mr-4"></UserIcon>
-              <span>{{
-                `${state.user?.firstname} ${state.user?.lastname}`
-              }}</span></a
-            >
-            <a class="link-btn" :href="logoutUrl">{{ t('logout') }}</a>
-          </div>
+          <a v-if="!isAnonymous" class="btn" href="/portal/mycraft">{{
+            t('my_dashboard')
+          }}</a>
           <a v-else class="btn" :href="loginUrl">{{ t('login') }}</a>
         </div>
       </div>
@@ -416,11 +420,20 @@ onMounted(() => {
                   class="nav-item-mobile after:hover:scale-x-0 flex items-center"
                   @click="toggleDropdown(index)"
                 >
-                  <span class="lg:mr-2 md:mr-1 first-letter:capitalize">{{
-                    (item as Dropdown).i18n
-                      ? t((item as Dropdown).i18n)
-                      : (item as Dropdown).label
-                  }}</span>
+                  <span
+                    v-if="(item as Dropdown).itemSelectedTitle && getItemSelectedTitle((item as Dropdown).items)"
+                    class="lg:mr-2 md:mr-1 first-letter:capitalize"
+                    >{{ getItemSelectedTitle((item as Dropdown).items) }}</span
+                  >
+                  <span
+                    v-else
+                    class="lg:mr-2 md:mr-1 first-letter:capitalize"
+                    >{{
+                      (item as Dropdown).i18n
+                        ? t((item as Dropdown).i18n)
+                        : (item as Dropdown).label
+                    }}</span
+                  >
                   <ChevronDownIcon
                     class="w-4 h-4"
                     stroke-width="4"
@@ -491,7 +504,7 @@ onMounted(() => {
   }
 
   .nav-item {
-    @apply relative text-lg w-fit block after:hover:scale-x-100 lg:mx-3 md:mx-2 hover:text-black first-letter:capitalize text-base;
+    @apply relative w-fit block after:hover:scale-x-100 lg:mx-3 md:mx-2 hover:text-black first-letter:capitalize text-base;
   }
 
   .nav-item:after {
@@ -503,11 +516,7 @@ onMounted(() => {
   }
 
   .btn {
-    @apply px-4 py-2 mx-2 text-slate-100 bg-primary rounded hover:bg-slate-700 transition-colors first-letter:capitalize;
-  }
-
-  .link-btn {
-    @apply text-primary hover:text-slate-700 hover:underline underline-offset-8 decoration-2 decoration-slate-700 flex flex-col items-center;
+    @apply px-4 py-2 mx-2 text-primary border border-slate-300 rounded hover:bg-primary hover:text-slate-100 transition-colors first-letter:capitalize text-base font-semibold;
   }
 
   .dropdown > li {
@@ -523,7 +532,7 @@ onMounted(() => {
   }
 
   .disabled {
-    @apply cursor-pointer pointer-events-none;
+    @apply cursor-pointer pointer-events-none text-primary;
   }
 
   * {

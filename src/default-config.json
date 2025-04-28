@@ -8,50 +8,58 @@
       "ROLE_GN_REVIEWER",
       "ROLE_GN_EDITOR",
       "ROLE_MAPSTORE_ADMIN"
-    ]
+    ],
+    "stylesheet": "/public/georchestra.css",
+    "logoUrl": "/public/logo-g2f.png",
+    "hideLogin": false
   },
   "defaultMenu": [
     {
-      "label": "Catalogue",
-      "i18n": "catalogue",
-      "url": "/datahub/",
-      "activeAppUrl": "/datahub"
+      "label": "toolbox",
+      "i18n": "toolbox",
+      "url": "",
+      "disabled": true
     },
     {
-      "label": "Mapstore viewer",
-      "i18n": "viewer",
-      "url": "/mapstore",
-      "activeAppUrl": "/mapstore"
-    },
-    {
-      "label": "Maps",
-      "i18n": "maps",
-      "url": "/mapstore/#/home",
-      "activeAppUrl": "/mapstore/#/home"
-    },
-    {
-      "label": "Services",
-      "i18n": "services",
-      "url": "/geoserver/web",
-      "activeAppUrl": "/geoserver"
-    },
-    {
-      "label": "Datafeeder",
-      "i18n": "datafeeder",
-      "url": "/import",
-      "activeAppUrl": "/import",
-      "hasRole": "ROLE_SUPERUSER,ROLE_IMPORT"
-    },
-    {
-      "hasRole": "ROLE_SUPERUSER,ROLE_GN_EDITOR,ROLE_GN_ADMIN,ROLE_MAPSTORE_ADMIN",
       "type": "separator"
     },
     {
       "type": "dropdown",
-      "label": "Administration",
-      "i18n": "admin",
-      "hasRole": "ROLE_SUPERUSER,ROLE_GN_EDITOR,ROLE_GN_ADMIN,ROLE_MAPSTORE_ADMIN",
+      "label": "Applications",
+      "i18n": "maps",
+      "itemSelectedTitle": true,
       "items": [
+        {
+          "label": "Catalogue",
+          "i18n": "catalogue",
+          "url": "/datahub/",
+          "activeAppUrl": "/datahub"
+        },
+        {
+          "label": "Mapstore viewer",
+          "i18n": "viewer",
+          "url": "/mapstore",
+          "activeAppUrl": "/mapstore"
+        },
+        {
+          "label": "Maps",
+          "i18n": "maps",
+          "url": "/mapstore/#/home",
+          "activeAppUrl": "/mapstore/#/home"
+        },
+        {
+          "label": "Services",
+          "i18n": "services",
+          "url": "/geoserver/web",
+          "activeAppUrl": "/geoserver"
+        },
+        {
+          "label": "Datafeeder",
+          "i18n": "datafeeder",
+          "url": "/import",
+          "activeAppUrl": "/import",
+          "hasRole": "ROLE_SUPERUSER,ROLE_IMPORT"
+        },
         {
           "label": "Geonetwork",
           "i18n": "catalogue",

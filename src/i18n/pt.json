@@ -12,5 +12,7 @@
   "login": "entrar",
   "remaining_days_msg_part1": "Apenas",
   "remaining_days_msg_part2": "dias para",
-  "remaining_days_msg_part3": "alterar sua senha"
+  "remaining_days_msg_part3": "alterar sua senha",
+  "toolbox": "caixa de ferramentas",
+  "my_dashboard": "Meu painel de controle"
 }
