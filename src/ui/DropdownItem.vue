@@ -28,8 +28,8 @@ const props = defineProps<{
       }}</span>
       <ChevronDownIcon class="w-4 h-4" stroke-width="4"></ChevronDownIcon>
     </button>
-    <div class="absolute hidden group-hover:block">
-      <ul class="border rounded dropdown z-[1002] bg-white mt-3">
+    <div class="absolute hidden group-hover:block z-[1002]">
+      <ul class="border rounded dropdown bg-white mt-3">
         <template
           v-for="(subitem, subindex) in props.item.items"
           :key="subindex"
