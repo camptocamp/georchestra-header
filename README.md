@@ -18,7 +18,7 @@ To run the development server use the command `npm run dev`.
 Here is a fake admin account to test the admin functionalities:
 
 ```javascript
-  const jsonFake = {
+const jsonFake = {
   "GeorchestraUser": {
     "username": "jdoe",
     "roles": [
@@ -35,12 +35,6 @@ Here is a fake admin account to test the admin functionalities:
     "firstName": "John",
     "lastName": "Doe",
     "email": "john.doe@yopmail.com",
-    "postalAddress": null,
-    "telephoneNumber": null,
-    "title": null,
-    "notes": null,
-    "ldapWarn": false,
-    "ldapRemainingDays": null,
     "isExternalAuth": false,
     "oauth2Provider": null,
     "oauth2Uid": null

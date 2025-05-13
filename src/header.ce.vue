@@ -1,13 +1,18 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive } from 'vue'
+import { computed, onMounted } from 'vue'
 import { getUserDetails, getPlatformInfos } from './auth'
-import type { User, PlatformInfos } from './auth'
-import GeorchestraLogo from '@/ui/GeorchestraLogo.vue'
-import ChevronDownIcon from '@/ui/ChevronDownIcon.vue'
 import { getI18n, t } from '@/i18n'
-import type { Link, Separator, Dropdown, Config } from '@/config-interfaces'
-import { defaultMenu, defaultConfig } from '@/default-config.json'
-import DashboardIcon from '@/ui/DashboardIcon.vue'
+import type { Link, Dropdown } from '@/config-interfaces'
+import GeorchestraLogo from '@/ui/GeorchestraLogo.vue'
+import ChevronDownIcon from '@/ui/icons/ChevronDownIcon.vue'
+import DashboardIcon from '@/ui/icons/DashboardIcon.vue'
+import {
+  checkCondition,
+  getItemSelectedTitle,
+  state,
+  replaceUrlsVariables,
+} from '@/shared'
+import Menu from '@/ui/Menu.vue'
 
 const props = defineProps<{
   activeApp?: string
@@ -19,19 +24,6 @@ const props = defineProps<{
   logoUrl?: string
 }>()
 
-const state = reactive({
-  user: null as null | User,
-  mobileMenuOpen: false,
-  platformInfos: null as null | PlatformInfos,
-  menu: defaultMenu as (Link | Separator | Dropdown)[],
-  config: defaultConfig as Config,
-  lang3: 'eng',
-  loaded: false,
-  matchedRouteScore: 0,
-  activeAppUrl: '' as string | undefined,
-  activeDropdown: null as null | number,
-})
-
 const isAnonymous = computed(() => !state.user || state.user.anonymous)
 const isWarned = computed(() => state.user?.warned)
 const remainingDays = computed(() => state.user?.remainingDays)
@@ -40,25 +32,9 @@ const loginUrl = computed(() => {
   current.searchParams.set('login', '')
   return current.toString()
 })
-const logoutUrl = computed(() => '/logout')
-
-function checkCondition(item: Link | Separator | Dropdown): boolean {
-  const hasRole = item.hasRole
-  if (!state.user) return false
-  if (!hasRole) return true
-  const isBlocked = item.blockedRole
-    ?.split(',')
-    .some(c => state.user?.roles?.indexOf(c) !== -1)
-  if (isBlocked) return false
-  return hasRole.split(',').some(c => state.user?.roles?.indexOf(c) !== -1)
-}
-
-function replaceUrlsVariables(url: string): string {
-  return url.replace(/:lang3/, state.lang3)
-}
 
 function determineActiveApp(): void {
-  const tmp = allNodes(state.menu, 'activeAppUrl')
+  const tmp = allNodes([...state.menu, ...state.rightMenu], 'activeAppUrl')
   const computedUrl = window.location.href.substring(
     window.location.origin.length,
     window.location.href.length
@@ -125,13 +101,6 @@ function toggleDropdown(index: number) {
   state.activeDropdown = state.activeDropdown === index ? null : index
 }
 
-function getItemSelectedTitle(items: Array<Link> | undefined): string {
-  const selectedItem = items?.find(
-    item => item.activeAppUrl === state.activeAppUrl
-  )
-  return selectedItem ? t(selectedItem.i18n || selectedItem.label) : ''
-}
-
 onMounted(() => {
   if (props.legacyHeader !== 'true') {
     getUserDetails().then(user => {
@@ -186,17 +155,17 @@ onMounted(() => {
       :is="'style'"
       v-if="!props.stylesheet && !state.config.stylesheet"
     >
-      header { --georchestra-header-primary: #85127e;
+      header { --georchestra-header-primary: #111928;
       --georchestra-header-secondary: #1b1f3b;
       --georchestra-header-primary-light: #85127e1a;
       --georchestra-header-secondary-light: #1b1f3b1a; }
     </component>
     <div
-      class="justify-between text-slate-600 md:flex hidden h-full bg-white md:text-sm mx-6"
+      class="justify-between text-[#111928] md:flex hidden h-full bg-white md:text-sm mx-6"
     >
       <div class="flex header-left">
         <a
-          href="/"
+          :href="isAnonymous ? '/' : '/portal/mycraft'"
           class="flex justify-center items-center lg:px-3 md:px-2 py-2"
         >
           <img
@@ -210,102 +179,7 @@ onMounted(() => {
           </template>
         </a>
         <nav class="flex justify-center items-center font-semibold header-nav">
-          <template v-for="(item, index) in state.menu" :key="index">
-            <template v-if="!item.type && checkCondition(item)">
-              <a
-                :href="(item as Link).url"
-                class="nav-item"
-                @click="state.activeAppUrl = (item as Link).activeAppUrl"
-                :class="{
-                  active: (item as Link).activeAppUrl == state.activeAppUrl,
-                  disabled: (item as Link).disabled
-                }"
-              >
-                <div class="flex items-center">
-                  <i
-                    v-if="(item as Link).icon"
-                    :class="(item as Link).icon"
-                    class="item-icon"
-                    style="font-size: 0.9rem"
-                  ></i>
-                  <span class="ml-1 first-letter:capitalize">
-                    {{
-                      (item as Link).i18n
-                        ? t((item as Link).i18n)
-                        : (item as Link).label
-                    }}
-                  </span>
-                </div>
-              </a>
-            </template>
-            <template
-              v-else-if="(item as Separator).type === 'separator' && checkCondition(item)"
-            >
-              <span class="text-gray-400">|</span>
-            </template>
-            <template
-              v-else-if="item.type === 'dropdown' && checkCondition(item)"
-            >
-              <div class="group inline-block relative">
-                <button
-                  class="nav-item after:hover:scale-x-0 flex items-center"
-                >
-                  <span
-                    v-if="(item as Dropdown).itemSelectedTitle && getItemSelectedTitle((item as Dropdown).items)"
-                    class="lg:mr-2 md:mr-1 first-letter:capitalize"
-                    >{{ getItemSelectedTitle((item as Dropdown).items) }}</span
-                  >
-                  <span
-                    v-else
-                    class="lg:mr-2 md:mr-1 first-letter:capitalize"
-                    >{{
-                      (item as Dropdown).i18n
-                        ? t((item as Dropdown).i18n)
-                        : (item as Dropdown).label
-                    }}</span
-                  >
-                  <ChevronDownIcon
-                    class="w-4 h-4"
-                    stroke-width="4"
-                  ></ChevronDownIcon>
-                </button>
-                <ul
-                  class="absolute hidden group-hover:block border rounded w-full dropdown z-[1002] bg-white"
-                >
-                  <template
-                    v-for="(subitem, subindex) in (item as Dropdown).items"
-                    :key="subindex"
-                  >
-                    <li
-                      v-if="checkCondition(subitem)"
-                      @click="
-                        state.activeAppUrl = (subitem as Link).activeAppUrl
-                      "
-                      :class="{
-                        active: (subitem as Link).activeAppUrl == state.activeAppUrl,
-                        disabled: (subitem as Link).disabled
-                      }"
-                    >
-                      <a
-                        :href="replaceUrlsVariables(subitem.url)"
-                        class="capitalize !flex justify-center items-center"
-                      >
-                        <i
-                          v-if="subitem.icon"
-                          :class="subitem.icon"
-                          class="pr-1 block pb-[2px] subitem-icon"
-                          style="font-size: 1rem"
-                        ></i>
-                        <span class="block">{{
-                          subitem.i18n ? t(subitem.i18n) : subitem.label
-                        }}</span>
-                      </a>
-                    </li>
-                  </template>
-                </ul>
-              </div>
-            </template>
-          </template>
+          <Menu :menu="state.menu" />
 
           <span class="text-gray-400 text-xs" v-if="isWarned">
             <a href="/console/account/changePassword">
@@ -317,6 +191,9 @@ onMounted(() => {
         </nav>
       </div>
       <div class="flex justify-center items-center mx-6 header-right">
+        <div class="font-semibold">
+          <Menu :menu="state.rightMenu" />
+        </div>
         <a
           v-if="!isAnonymous"
           class="btn flex items-center justify-center"
@@ -519,11 +396,11 @@ onMounted(() => {
   }
 
   .dropdown > li {
-    @apply block text-center hover:bg-primary-light text-gray-700 hover:text-black capitalize;
+    @apply block hover:bg-primary-light text-gray-700 hover:text-black capitalize;
   }
 
   .dropdown > li > a {
-    @apply block w-full h-full py-3;
+    @apply block w-full h-full p-3;
   }
 
   .dropdown > li.active {

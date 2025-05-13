@@ -1,10 +1,6 @@
 import en from './i18n/en.json'
 import de from './i18n/de.json'
 import fr from './i18n/fr.json'
-import es from './i18n/es.json'
-import nl from './i18n/nl.json'
-import ru from './i18n/ru.json'
-import pt from './i18n/pt.json'
 import { createI18n } from 'vue-i18n'
 
 export let i18n: any
@@ -17,10 +13,6 @@ export const getI18n = (messages: any, lang: string) => {
       en: { ...en, ...messages.en },
       de: { ...de, ...messages.de },
       fr: { ...fr, ...messages.fr },
-      es: { ...es, ...messages.es },
-      nl: { ...nl, ...messages.nl },
-      ru: { ...ru, ...messages.ru },
-      pt: { ...pt, ...messages.pt },
     },
   })
   i18n.global.locale = lang

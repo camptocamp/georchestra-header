@@ -1,11 +1,11 @@
 {
   "go.home": "go home",
   "logo": "geOrchestra",
-  "catalogue": "catalogue",
-  "viewer": "viewer",
+  "catalogue": "datahub",
+  "viewer": "mapstore",
   "maps": "apps",
   "datafeeder": "import",
-  "services": "services",
+  "services": "Geoserver",
   "admin": "administration",
   "users": "users",
   "logout": "logout",
@@ -14,5 +14,7 @@
   "remaining_days_msg_part2": "days left to",
   "remaining_days_msg_part3": "change your password",
   "toolbox": "Toolbox",
-  "my_dashboard": "My dashboard"
+  "my_dashboard": "My dashboard",
+  "mviewerstudio": "Mviewer Studio",
+  "mdeditor": "metadata editor"
 }

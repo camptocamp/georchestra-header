@@ -1,11 +1,11 @@
 {
   "go.home": "retourner à l'accueil",
   "logo": "geOrchestra",
-  "catalogue": "catalogue",
-  "viewer": "visualiseur",
+  "catalogue": "datahub",
+  "viewer": "mapstore",
   "maps": "applications",
   "datafeeder": "importer",
-  "services": "services",
+  "services": "Geoserver",
   "admin": "administration",
   "users": "utilisateurs",
   "logout": "déconnexion",
@@ -14,5 +14,7 @@
   "remaining_days_msg_part2": "jours restants pour",
   "remaining_days_msg_part3": "modifier votre mot de passe",
   "toolbox": "Boîte à outils",
-  "my_dashboard": "Mon tableau de bord"
+  "my_dashboard": "Mon tableau de bord",
+  "mviewerstudio": "Mviewer Studio",
+  "mdeditor": "éditeur de métadonnées"
 }

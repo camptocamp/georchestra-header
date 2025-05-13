@@ -41,52 +41,49 @@
           "activeAppUrl": "/mapstore"
         },
         {
-          "label": "Maps",
-          "i18n": "maps",
-          "url": "/mapstore/#/home",
-          "activeAppUrl": "/mapstore/#/home"
+          "label": "Mviewer",
+          "i18n": "mviewerstudio",
+          "url": "/mviewerstudio/index.html",
+          "activeAppUrl": "/mviewerstudio"
         },
         {
-          "label": "Services",
+          "label": "geoserver",
           "i18n": "services",
           "url": "/geoserver/web",
           "activeAppUrl": "/geoserver"
         },
         {
+          "label": "mdeditor",
+          "i18n": "mdeditor",
+          "url": "/metadata-editor",
+          "activeAppUrl": "/metadata-editor"
+        }
+      ]
+    }
+  ],
+  "rightMenu": [
+    {
+      "type": "dropdown",
+      "label": "Admin",
+      "hasRole": "ROLE_SUPERUSER,ROLE_ORGADMIN,ROLE_MAPSTORE_ADMIN,ROLE_IMPORT",
+      "items": [
+        {
           "label": "Datafeeder",
-          "i18n": "datafeeder",
           "url": "/import",
           "activeAppUrl": "/import",
-          "hasRole": "ROLE_SUPERUSER,ROLE_IMPORT"
+          "hasRole": "ROLE_IMPORT"
         },
         {
-          "label": "Geonetwork",
-          "i18n": "catalogue",
-          "url": "/geonetwork/srv/:lang3/catalog.edit#/board",
-          "activeAppUrl": "/geonetwork",
-          "hasRole": "ROLE_GN_EDITOR",
-          "blockedRole": "ROLE_SUPERUSER,ROLE_GN_REVIEWER,ROLE_GN_ADMIN"
-        },
-        {
-          "label": "Geonetwork",
-          "i18n": "catalogue",
-          "url": "/geonetwork/srv/:lang3/admin.console",
-          "activeAppUrl": "/geonetwork",
-          "hasRole": "ROLE_SUPERUSER,ROLE_GN_REVIEWER,ROLE_GN_ADMIN"
-        },
-        {
-          "label": "Viewer",
-          "i18n": "viewer",
+          "label": "Mapstore admin",
           "url": "/mapstore/#/admin",
           "activeAppUrl": "/mapstore/#/admin",
-          "hasRole": "ROLE_SUPERUSER,ROLE_MAPSTORE_ADMIN"
+          "hasRole": "ROLE_MAPSTORE_ADMIN"
         },
         {
           "label": "Console",
-          "i18n": "users",
           "url": "/console/manager/home",
           "activeAppUrl": "/console/manager",
-          "hasRole": "ROLE_SUPERUSER"
+          "hasRole": "ROLE_SUPERUSER,ROLE_ORGADMIN"
         }
       ]
     }
