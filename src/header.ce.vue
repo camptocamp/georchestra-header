@@ -197,7 +197,7 @@ onMounted(() => {
         <a
           v-if="!isAnonymous"
           class="btn flex items-center justify-center"
-          href="/portal/mycraft"
+          href="/portal/"
         >
           <DashboardIcon class="w-4 h-4 mr-2" stroke-width="4"></DashboardIcon>
           {{ t('my_dashboard') }}</a
