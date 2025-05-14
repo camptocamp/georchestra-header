@@ -199,7 +199,7 @@ onMounted(() => {
           class="btn flex items-center justify-center"
           href="/portal/"
         >
-          <DashboardIcon class="w-4 h-4 mr-2" stroke-width="4"></DashboardIcon>
+          <DashboardIcon class="w-5 h-5 mr-2" stroke-width="4"></DashboardIcon>
           {{ t('my_dashboard') }}</a
         >
         <a
