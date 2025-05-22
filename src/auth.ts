@@ -8,6 +8,7 @@ interface WhoAmIResponse {
     firstName: string
     lastName: string
     ldapWarn: boolean
+    isExternalAuth: boolean
     ldapRemainingDays: string
   }
 }
@@ -19,6 +20,7 @@ export interface User {
   anonymous: boolean
   warned: boolean
   remainingDays: string
+  isExternalAuth: boolean
   roles: string[]
 }
 
@@ -33,6 +35,7 @@ export async function getUserDetails(): Promise<User> {
           warned: false,
           remainingDays: '0',
           anonymous: true,
+          isExternalAuth: false,
           roles: ['ROLE_ANONYMOUS'],
         }
       }
@@ -42,6 +45,7 @@ export async function getUserDetails(): Promise<User> {
         lastname: user.lastName,
         warned: user.ldapWarn,
         remainingDays: user.ldapRemainingDays,
+        isExternalAuth: user.isExternalAuth,
         anonymous: user.roles.indexOf('ROLE_ANONYMOUS') > -1,
         roles: user.roles,
       }

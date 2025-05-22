@@ -40,7 +40,9 @@ const loginUrl = computed(() => {
   current.searchParams.set('login', '')
   return current.toString()
 })
-const logoutUrl = computed(() => '/logout')
+const logoutUrl = computed(() =>
+  state.user?.isExternalAuth ? '/logout' : '/local-logout'
+)
 
 function checkCondition(item: Link | Separator | Dropdown): boolean {
   const hasRole = item.hasRole
@@ -321,6 +323,12 @@ onMounted(() => {
           class="btn"
           :href="loginUrl"
           >{{ t('login') }}</a
+        >
+        <a
+          v-if="!state.config.hideLogin && isAnonymous"
+          class="btn"
+          href="/login?force"
+          >Local login</a
         >
       </div>
     </div>
