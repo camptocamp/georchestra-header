@@ -50,7 +50,7 @@
       "type": "dropdown",
       "label": "Administration",
       "i18n": "admin",
-      "hasRole": "ROLE_SUPERUSER,ROLE_GN_EDITOR,ROLE_GN_ADMIN,ROLE_MAPSTORE_ADMIN",
+      "hasRole": "ROLE_SUPERUSER,ROLE_GN_EDITOR,ROLE_GN_ADMIN,ROLE_MAPSTORE_ADMIN,ROLE_ORGADMIN",
       "items": [
         {
           "label": "Geonetwork",
@@ -79,7 +79,7 @@
           "i18n": "users",
           "url": "/console/manager/home",
           "activeAppUrl": "/console/manager",
-          "hasRole": "ROLE_SUPERUSER"
+          "hasRole": "ROLE_SUPERUSER,ROLE_ORGADMIN"
         }
       ]
     }
