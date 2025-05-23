@@ -41,7 +41,7 @@ const loginUrl = computed(() => {
   return current.toString()
 })
 const logoutUrl = computed(() =>
-  state.user?.isExternalAuth ? '/logout' : '/local-logout'
+  state.user?.isExternalAuth ? '/logout' : '/logout?force'
 )
 
 function checkCondition(item: Link | Separator | Dropdown): boolean {
