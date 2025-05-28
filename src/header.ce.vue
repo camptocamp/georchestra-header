@@ -322,13 +322,19 @@ onMounted(() => {
           v-if="!state.config.hideLogin && isAnonymous"
           class="btn"
           :href="loginUrl"
-          >{{ t('login') }}</a
         >
+          <img
+            src="https://discovery.renater.fr/images/logo-federation.svg"
+            class="h-[40px]"
+            alt="renater"
+          />
+        </a>
+        <div v-if="!state.config.hideLogin && isAnonymous">{{ t('or') }}</div>
         <a
           v-if="!state.config.hideLogin && isAnonymous"
           class="btn"
           href="/login?force"
-          >Local login</a
+          >{{ t('login') }}</a
         >
       </div>
     </div>
