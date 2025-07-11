@@ -29,31 +29,43 @@
       "itemSelectedTitle": true,
       "items": [
         {
-          "label": "Catalogue",
+          "label": "Datahub",
           "i18n": "catalogue",
           "url": "/datahub/",
           "activeAppUrl": "/datahub"
         },
         {
-          "label": "Mapstore viewer",
+          "label": "Mapstore",
           "i18n": "viewer",
-          "url": "/mapstore",
+          "url": "/mapstore/#/context/contextpardefautg2f",
           "activeAppUrl": "/mapstore"
         },
         {
-          "label": "Mviewer",
+          "label": "Mviewer studio",
           "i18n": "mviewerstudio",
           "url": "/mviewerstudio/index.html",
           "activeAppUrl": "/mviewerstudio"
         },
         {
-          "label": "geoserver",
+          "label": "Geoserver",
           "i18n": "services",
           "url": "/geoserver/web",
           "activeAppUrl": "/geoserver"
         },
         {
-          "label": "mdeditor",
+          "label": "Geocontrib",
+          "i18n": "services",
+          "url": "/geocontrib",
+          "activeAppUrl": "/geocontrib"
+        },
+        {
+          "label": "Superset",
+          "i18n": "services",
+          "url": "/superset/dashboard",
+          "activeAppUrl": "/superset"
+        },
+        {
+          "label": "Editeur de métadonnée",
           "i18n": "mdeditor",
           "url": "/metadata-editor",
           "activeAppUrl": "/metadata-editor"
@@ -68,16 +80,27 @@
       "hasRole": "ROLE_SUPERUSER,ROLE_ORGADMIN,ROLE_MAPSTORE_ADMIN,ROLE_IMPORT",
       "items": [
         {
-          "label": "Datafeeder",
-          "url": "/import",
-          "activeAppUrl": "/import",
-          "hasRole": "ROLE_IMPORT"
-        },
-        {
           "label": "Mapstore admin",
           "url": "/mapstore/#/admin",
           "activeAppUrl": "/mapstore/#/admin",
           "hasRole": "ROLE_MAPSTORE_ADMIN"
+        },
+        {
+          "label": "Superset admin",
+          "url": "/superset/roles",
+          "activeAppUrl": "/mapstore/#/admin",
+          "hasRole": "ROLE_SUPERSET_ADMIN"
+        },
+         {
+          "label": "Geonetwork admin",
+          "url": "/geonetwork/srv/fre/admin.console#/home",
+          "activeAppUrl": "/geonetwork/srv/fre/admin.console#/home",
+          "hasRole": "ROLE_GN_ADMIN"
+        },
+         {
+          "label": "Geocontrib admin",
+          "url": "/geocontrib/admin",
+          "activeAppUrl": "/geocontrib/admin",          
         },
         {
           "label": "Console",
