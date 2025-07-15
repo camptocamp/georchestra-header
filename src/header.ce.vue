@@ -114,6 +114,9 @@ onMounted(() => {
             if (json.menu) {
               state.menu = json.menu
             }
+            if (json.rightMenu) {
+              state.rightMenu = json.rightMenu
+            }
             setI18nAndActiveApp(json.i18n)
           })
       else setI18nAndActiveApp()
