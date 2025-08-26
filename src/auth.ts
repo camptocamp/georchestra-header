@@ -2,23 +2,10 @@ const AUTH_API_URL = '/whoami'
 const CONSOLE_PLATFORM_API_URL = '/console/private/platform/infos'
 const GEOCONTRIB_API_URL = '/geocontrib/api'
 
-type KNOWN_ROLES =
-  | 'ROLE_SUPERUSER'
-  | 'ROLE_ORGADMIN'
-  | 'ROLE_MAPSTORE_ADMIN'
-  | 'ROLE_USER'
-  | 'ROLE_ADMINISTRATOR'
-  | 'ROLE_EXTRACTORAPP'
-  | 'ROLE_GN_REVIEWER'
-  | 'ROLE_GN_EDITOR'
-  | 'ROLE_GN_ADMIN'
-  | 'ROLE_EMAILPROXY'
-  | 'ROLE_ANONYMOUS'
-  | 'ROLE_IMPORT'
 
 interface WhoAmIResponse {
   GeorchestraUser: {
-    roles: KNOWN_ROLES[]
+    roles: string[]
     username: string
     firstName: string
     lastName: string
@@ -45,6 +32,7 @@ export interface AdminRoles {
   catalogAdmin: boolean
   viewer: boolean
   import: boolean
+  superset: boolean
 }
 
 export async function getUserDetails(): Promise<User> {
@@ -74,7 +62,7 @@ export async function getUserDetails(): Promise<User> {
     })
 }
 
-export function getAdminRoles(roles: KNOWN_ROLES[]): AdminRoles | null {
+export function getAdminRoles(roles: string[]): AdminRoles | null {
   const superUser = roles.indexOf('ROLE_SUPERUSER') > -1
   const console = superUser || roles.indexOf('ROLE_ORGADMIN') > -1
   const catalogAdmin = superUser || roles.indexOf('ROLE_GN_ADMIN') > -1
@@ -93,6 +81,7 @@ export function getAdminRoles(roles: KNOWN_ROLES[]): AdminRoles | null {
     catalogAdmin,
     viewer,
     import: superUser || roles.indexOf('ROLE_IMPORT') > -1,
+    superset: roles.some(userRole => userRole.startsWith('ROLE_SUPERSET_')),
   }
 }
 
