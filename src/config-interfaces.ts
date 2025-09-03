@@ -21,6 +21,8 @@ export interface Link extends MenuItem {
   icon?: string
   //If the link is clickable
   disabled?: boolean
+  //URL for the chatbot endpoint
+  chatbotEndpoint?: string
 }
 
 export interface Dropdown extends MenuItem {

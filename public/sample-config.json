@@ -51,7 +51,8 @@
           "i18n": "catalogue",
           "url": "/geonetwork/srv/:lang3/catalog.edit#/board",
           "activeAppUrl": "/geonetwork",
-          "disabled": true
+          "disabled": false,
+          "chatbotEndpoint": "/chatbot-backend/v1/cms"
         }
       ]
     },

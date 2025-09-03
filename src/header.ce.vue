@@ -48,7 +48,7 @@ function determineActiveApp(): void {
   let matched: boolean
   for (const link of allLinks) {
     matched = false
-    const activeAppUrlSplitted = link.split(':')
+    const activeAppUrlSplitted = link.activeAppUrl!.split(':')
     const base =
       activeAppUrlSplitted.length > 1 ? activeAppUrlSplitted[0] : 'start'
     const url = replaceUrlsVariables(
@@ -71,13 +71,27 @@ function determineActiveApp(): void {
         break
     }
     state.matchedRouteScore =
-      matched && link.length > state.matchedRouteScore
-        ? link.length
+      matched && link.activeAppUrl!.length > state.matchedRouteScore
+        ? link.activeAppUrl!.length
         : state.matchedRouteScore
-    if (matched && state.matchedRouteScore === link?.length) {
-      state.activeAppUrl = link
+    if (matched && state.matchedRouteScore === link?.activeAppUrl!.length) {
+      state.activeAppLink = link
     }
   }
+}
+
+function allNodes(obj: any, key: string, array?: Link[]): Link[] {
+  array = array || []
+  if ('object' === typeof obj) {
+    for (let k in obj) {
+      if (k === key) {
+        array.push(obj)
+      } else {
+        allNodes(obj[k], key, array)
+      }
+    }
+  }
+  return array
 }
 
 function setI18nAndActiveApp(i18n?: any) {
@@ -89,6 +103,8 @@ function setI18nAndActiveApp(i18n?: any) {
   determineActiveApp()
   state.loaded = true
 }
+
+const chatbotEndpoint = computed(() => state.activeAppLink?.chatbotEndpoint)
 
 onMounted(() => {
   if (props.legacyHeader !== 'true') {
@@ -126,6 +142,7 @@ onMounted(() => {
     :class="{ 'has-custom-stylesheet': state.config.stylesheet }"
     :style="`height:${props.height}px`"
   >
+    <span>ActiveAppURL: {{ state.activeAppLink?.activeAppUrl }}</span>
     <link
       rel="stylesheet"
       :href="state.config.stylesheet"
@@ -186,6 +203,10 @@ onMounted(() => {
         </nav>
       </div>
     </div>
+    <chat-bubble
+      v-if="chatbotEndpoint"
+      :endpoint="chatbotEndpoint"
+    ></chat-bubble>
   </header>
 </template>
 
