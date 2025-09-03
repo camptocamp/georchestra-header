@@ -25,6 +25,8 @@ export interface Link extends AbstractBaseInterface {
   customClass?: string
   // to use icon from url instead icon from lib
   iconUrl: string
+  //URL for the chatbot endpoint
+  chatbotEndpoint?: string
 }
 
 export interface Dropdown extends AbstractBaseInterface {
