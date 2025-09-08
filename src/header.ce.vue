@@ -38,6 +38,8 @@ const logoutUrl = computed(() =>
       : state.config.logoutUrl
   )
 )
+const activeAppUrl = computed(() => state.activeAppLink?.activeAppUrl)
+const chatbotEndpoint = computed(() => state.activeAppLink?.chatbotEndpoint)
 
 function determineActiveApp(): void {
   const allLinks = allNodes(state.menu, 'activeAppUrl')
@@ -104,8 +106,6 @@ function setI18nAndActiveApp(i18n?: any) {
   state.loaded = true
 }
 
-const chatbotEndpoint = computed(() => state.activeAppLink?.chatbotEndpoint)
-
 function loadChatPanelScript() {
   const scriptId = 'chatpanel-script'
   if (
@@ -159,7 +159,6 @@ onMounted(() => {
     :class="{ 'has-custom-stylesheet': state.config.stylesheet }"
     :style="`height:${props.height}px`"
   >
-    <span>ActiveAppURL: {{ state.activeAppLink?.activeAppUrl }}</span>
     <link
       rel="stylesheet"
       :href="state.config.stylesheet"
