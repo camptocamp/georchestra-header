@@ -11,7 +11,8 @@
         {"redirect": ":origin/success"}
       ]
     },
-    "logoutUrl": "/logout"
+    "logoutUrl": "/logout",
+    "chatpanelModuleUrl": "https://camptocamp.github.io/datagrandest-assistant/main/chatpanel.js"
   },
   "menu": [
     {

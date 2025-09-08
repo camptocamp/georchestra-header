@@ -151,6 +151,22 @@ function toggleDropdown(index: number) {
 
 const chatbotEndpoint = computed(() => state.activeAppLink?.chatbotEndpoint)
 
+function loadChatPanelScript() {
+  const scriptId = 'chatpanel-script'
+  if (
+    !document.getElementById(scriptId) &&
+    state.config.chatpanelModuleUrl &&
+    chatbotEndpoint.value
+  ) {
+    const script = document.createElement('script')
+    script.type = 'module'
+    script.src = state.config.chatpanelModuleUrl
+    script.id = scriptId
+    if (props.customNonce) script.setAttribute('nonce', props.customNonce)
+    document.head.appendChild(script)
+  }
+}
+
 onMounted(() => {
   if (props.legacyHeader !== 'true') {
     getUserDetails().then(user => {
@@ -165,6 +181,7 @@ onMounted(() => {
               state.menu = json.menu
             }
             setI18nAndActiveApp(json.i18n)
+            loadChatPanelScript()
           })
       else setI18nAndActiveApp()
     })

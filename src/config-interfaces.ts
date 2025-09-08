@@ -54,4 +54,6 @@ export interface Config {
   logoutUrl: string
   //Use it if you want a different logout URL for external authentication providers
   logoutExternalUrl?: string
+  //URL to the chatpanel module
+  chatpanelModuleUrl?: string
 }
