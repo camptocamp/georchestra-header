@@ -78,4 +78,6 @@ export interface Config {
   logoutExternalUrl?: string
   //Menu items to display in the header
   displayFullnameInAccountBtn?: boolean
+  //URL to the chatpanel module
+  chatpanelModuleUrl?: string
 }
