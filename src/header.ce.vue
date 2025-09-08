@@ -50,6 +50,8 @@ const logoutUrl = computed(() =>
       : state.config.logoutUrl
   )
 )
+const activeAppUrl = computed(() => state.activeAppLink?.activeAppUrl)
+const chatbotEndpoint = computed(() => state.activeAppLink?.chatbotEndpoint)
 
 function checkCondition(item: Link | Separator | Dropdown): boolean {
   const rolesAllowed = item.hasRole
@@ -149,8 +151,6 @@ function toggleDropdown(index: number) {
   state.activeDropdown = state.activeDropdown === index ? null : index
 }
 
-const chatbotEndpoint = computed(() => state.activeAppLink?.chatbotEndpoint)
-
 function loadChatPanelScript() {
   const scriptId = 'chatpanel-script'
   if (
@@ -203,7 +203,6 @@ onMounted(() => {
     class="host h-[80px] text-base"
     :style="`height:${props.height}px`"
   >
-    <span>ActiveAppURL: {{ state.activeAppLink?.activeAppUrl }}</span>
     <link
       rel="stylesheet"
       :href="state.config.stylesheet"
@@ -242,7 +241,7 @@ onMounted(() => {
                 class="nav-item"
                 @click="state.activeAppLink = item as Link"
                 :class="{
-                  active: (item as Link).activeAppUrl == state.activeAppLink?.activeAppUrl,
+                  active: (item as Link).activeAppUrl == activeAppUrl,
                   disabled: (item as Link).disabled
                 }"
               >
@@ -296,7 +295,7 @@ onMounted(() => {
                       v-if="checkCondition(subitem)"
                       @click="state.activeAppLink = subitem as Link"
                       :class="{
-                        active: (subitem as Link).activeAppUrl == state.activeAppLink?.activeAppUrl,
+                        active: (subitem as Link).activeAppUrl == activeAppUrl,
                         disabled: (subitem as Link).disabled
                       }"
                     >
@@ -423,7 +422,7 @@ onMounted(() => {
                 class="nav-item-mobile"
                 @click="state.activeAppLink = item as Link"
                 :class="{
-                  active: (item as Link).activeAppUrl == state.activeAppLink?.activeAppUrl,
+                  active: (item as Link).activeAppUrl == activeAppUrl,
                   disabled: (item as Link).disabled
                 }"
               >
@@ -468,7 +467,7 @@ onMounted(() => {
                       v-if="checkCondition(subitem)"
                       @click="state.activeAppLink = subitem as Link"
                       :class="{
-                        active: (subitem as Link).activeAppUrl == state.activeAppLink?.activeAppUrl,
+                        active: (subitem as Link).activeAppUrl == activeAppUrl,
                         disabled: (subitem as Link).disabled
                       }"
                     >
