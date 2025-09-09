@@ -3,11 +3,20 @@
     "hideLogin": false,
     "login": {
       "url": ":origin/login",
-      "params": [
-        {"redirect": ":currentUrl"}
-      ]
+      "params": [{ "redirect": ":currentUrl" }]
     },
-    "logoutUrl": "/logout"
+    "logoutUrl": "/logout",
+    "cgus": {
+      "lang": {
+        "default": "/public/legal-notice.html",
+        "eng": "/public/mentions-legales-cookies-cgu_en.html",
+        "fre": "/public/legal-notice.html"
+      },
+      "excludedUrls": [
+        "/public/legal-notice.html",
+        "/public/mentions-legales-cookies-cgu_en.html"
+      ]
+    }
   },
   "defaultMenu": [
     {

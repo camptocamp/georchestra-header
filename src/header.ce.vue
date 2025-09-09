@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { getUserDetails } from './auth'
 import type { User } from './auth'
 import UserIcon from './ui/UserIcon.vue'
@@ -32,6 +32,8 @@ const state = reactive({
   activeDropdown: null as null | number,
 })
 
+const showCGUModal = ref(false)
+const cguAccepted = ref(false)
 const isAnonymous = computed(() => !state.user || state.user.anonymous)
 const isWarned = computed(() => state.user?.warned)
 const remainingDays = computed(() => state.user?.remainingDays)
@@ -50,6 +52,15 @@ const logoutUrl = computed(() =>
       : state.config.logoutUrl
   )
 )
+const cgusUrl = computed(() => {
+  const cgus = state.config.cgus
+  return cgus.lang[state.lang3] ?? cgus.lang.default
+})
+
+function acceptCGU() {
+  localStorage.setItem('cguAccepted', 'true')
+  showCGUModal.value = false
+}
 
 function checkCondition(item: Link | Separator | Dropdown): boolean {
   const rolesAllowed = item.hasRole
@@ -167,9 +178,48 @@ onMounted(() => {
       else setI18nAndActiveApp()
     })
   }
+  const alreadyAccepted = localStorage.getItem('cguAccepted') === 'true'
+  const currentPath = window.location.pathname
+
+  if (
+    !alreadyAccepted &&
+    !state.config.cgus.excludedUrls.some(url => currentPath.startsWith(url))
+  ) {
+    showCGUModal.value = true
+  }
 })
 </script>
 <template>
+  <div
+    v-if="showCGUModal"
+    class="host fixed inset-0 flex items-center justify-center bg-black/50 z-[2000]"
+  >
+    <div class="bg-white rounded-2xl shadow-lg w-[90%] max-w-lg p-6">
+      <h2 class="text-xl font-bold mb-4 text-center">{{ t('cgu.terms') }}</h2>
+      <p class="mb-4 text-gray-600">
+        {{ t('cgu.thanks') }}
+        <a :href="cgusUrl" target="_blank" class="text-primary underline">
+          {{ t('cgu.cgu') }}
+        </a>
+        {{ t('cgu.continue') }}
+      </p>
+
+      <label class="flex items-center space-x-2 mb-4">
+        <input
+          type="checkbox"
+          v-model="cguAccepted"
+          class="h-4 w-4 border rounded"
+        />
+        <span>{{ t('cgu.read') }}</span>
+      </label>
+
+      <div class="flex justify-end">
+        <button class="cgu-btn" :disabled="!cguAccepted" @click="acceptCGU">
+          {{ t('cgu.validate') }}
+        </button>
+      </div>
+    </div>
+  </div>
   <div v-if="props.legacyHeader === 'true'">
     <iframe
       class="w-full"
@@ -522,6 +572,10 @@ onMounted(() => {
 
   .btn {
     @apply px-4 py-2 mx-2 text-slate-100 bg-primary rounded hover:bg-slate-700 transition-colors first-letter:capitalize;
+  }
+
+  .cgu-btn {
+    @apply px-4 py-2 mx-2 text-slate-100 bg-slate-700 rounded hover:bg-slate-500 disabled:bg-slate-300 transition-colors first-letter:capitalize;
   }
 
   .link-btn {
