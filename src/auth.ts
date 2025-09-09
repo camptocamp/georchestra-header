@@ -75,7 +75,8 @@ export function getAdminRoles(roles: string[]): AdminRoles | null {
   if (!admin && roles.indexOf('ROLE_IMPORT') === -1) return null
   return {
     superUser,
-    admin,
+    admin:
+      admin || roles.some(userRole => userRole.startsWith('ROLE_SUPERSET_')),
     console,
     catalog,
     catalogAdmin,
