@@ -11,7 +11,8 @@
         {"redirect": ":origin/success"}
       ]
     },
-    "logoutUrl": "/logout"
+    "logoutUrl": "/logout",
+    "chatpanelModuleUrl": "https://camptocamp.github.io/datagrandest-assistant/main/chatpanel.js"
   },
   "menu": [
     {
@@ -50,7 +51,8 @@
           "i18n": "catalogue",
           "url": "/geonetwork/srv/:lang3/catalog.edit#/board",
           "activeAppUrl": "/geonetwork",
-          "disabled": true
+          "disabled": false,
+          "chatbotEndpoint": "/chatbot-backend/v1/cms"
         }
       ]
     },

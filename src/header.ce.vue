@@ -28,7 +28,7 @@ const state = reactive({
   lang3: 'eng',
   loaded: false,
   matchedRouteScore: 0,
-  activeAppUrl: '' as string | undefined,
+  activeAppLink: null as null | Link,
   activeDropdown: null as null | number,
 })
 
@@ -50,6 +50,8 @@ const logoutUrl = computed(() =>
       : state.config.logoutUrl
   )
 )
+const activeAppUrl = computed(() => state.activeAppLink?.activeAppUrl)
+const chatbotEndpoint = computed(() => state.activeAppLink?.chatbotEndpoint)
 
 function checkCondition(item: Link | Separator | Dropdown): boolean {
   const rolesAllowed = item.hasRole
@@ -89,7 +91,7 @@ function determineActiveApp(): void {
   let matched: boolean
   for (const link of allLinks) {
     matched = false
-    const activeAppUrlSplitted = link.split(':')
+    const activeAppUrlSplitted = link.activeAppUrl!.split(':')
     const base =
       activeAppUrlSplitted.length > 1 ? activeAppUrlSplitted[0] : 'start'
     const url = replaceUrlsVariables(
@@ -112,21 +114,21 @@ function determineActiveApp(): void {
         break
     }
     state.matchedRouteScore =
-      matched && link.length > state.matchedRouteScore
-        ? link.length
+      matched && link.activeAppUrl!.length > state.matchedRouteScore
+        ? link.activeAppUrl!.length
         : state.matchedRouteScore
-    if (matched && state.matchedRouteScore === link?.length) {
-      state.activeAppUrl = link
+    if (matched && state.matchedRouteScore === link?.activeAppUrl!.length) {
+      state.activeAppLink = link
     }
   }
 }
 
-function allNodes(obj: any, key: string, array?: any[]): string[] {
+function allNodes(obj: any, key: string, array?: Link[]): Link[] {
   array = array || []
   if ('object' === typeof obj) {
     for (let k in obj) {
       if (k === key) {
-        array.push(obj[k])
+        array.push(obj)
       } else {
         allNodes(obj[k], key, array)
       }
@@ -149,6 +151,22 @@ function toggleDropdown(index: number) {
   state.activeDropdown = state.activeDropdown === index ? null : index
 }
 
+function loadChatPanelScript() {
+  const scriptId = 'chatpanel-script'
+  if (
+    !document.getElementById(scriptId) &&
+    state.config.chatpanelModuleUrl &&
+    chatbotEndpoint.value
+  ) {
+    const script = document.createElement('script')
+    script.type = 'module'
+    script.src = state.config.chatpanelModuleUrl
+    script.id = scriptId
+    if (props.customNonce) script.setAttribute('nonce', props.customNonce)
+    document.head.appendChild(script)
+  }
+}
+
 onMounted(() => {
   if (props.legacyHeader !== 'true') {
     getUserDetails().then(user => {
@@ -163,6 +181,7 @@ onMounted(() => {
               state.menu = json.menu
             }
             setI18nAndActiveApp(json.i18n)
+            loadChatPanelScript()
           })
       else setI18nAndActiveApp()
     })
@@ -220,9 +239,9 @@ onMounted(() => {
               <a
                 :href="(item as Link).url"
                 class="nav-item"
-                @click="state.activeAppUrl = (item as Link).activeAppUrl"
+                @click="state.activeAppLink = item as Link"
                 :class="{
-                  active: (item as Link).activeAppUrl == state.activeAppUrl,
+                  active: (item as Link).activeAppUrl == activeAppUrl,
                   disabled: (item as Link).disabled
                 }"
               >
@@ -274,11 +293,9 @@ onMounted(() => {
                   >
                     <li
                       v-if="checkCondition(subitem)"
-                      @click="
-                        state.activeAppUrl = (subitem as Link).activeAppUrl
-                      "
+                      @click="state.activeAppLink = subitem as Link"
                       :class="{
-                        active: (subitem as Link).activeAppUrl == state.activeAppUrl,
+                        active: (subitem as Link).activeAppUrl == activeAppUrl,
                         disabled: (subitem as Link).disabled
                       }"
                     >
@@ -403,9 +420,9 @@ onMounted(() => {
               <a
                 :href="(item as Link).url"
                 class="nav-item-mobile"
-                @click="state.activeAppUrl = (item as Link).activeAppUrl"
+                @click="state.activeAppLink = item as Link"
                 :class="{
-                  active: (item as Link).activeAppUrl == state.activeAppUrl,
+                  active: (item as Link).activeAppUrl == activeAppUrl,
                   disabled: (item as Link).disabled
                 }"
               >
@@ -448,11 +465,9 @@ onMounted(() => {
                   >
                     <li
                       v-if="checkCondition(subitem)"
-                      @click="
-                        state.activeAppUrl = (subitem as Link).activeAppUrl
-                      "
+                      @click="state.activeAppLink = subitem as Link"
                       :class="{
-                        active: (subitem as Link).activeAppUrl == state.activeAppUrl,
+                        active: (subitem as Link).activeAppUrl == activeAppUrl,
                         disabled: (subitem as Link).disabled
                       }"
                     >
@@ -479,6 +494,10 @@ onMounted(() => {
         </nav>
       </div>
     </div>
+    <chat-bubble
+      v-if="chatbotEndpoint"
+      :endpoint="chatbotEndpoint"
+    ></chat-bubble>
   </header>
 </template>
 

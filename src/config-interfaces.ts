@@ -21,6 +21,8 @@ export interface Link extends MenuItem {
   icon?: string
   //If the link is clickable
   disabled?: boolean
+  //URL for the chatbot endpoint
+  chatbotEndpoint?: string
 }
 
 export interface Dropdown extends MenuItem {
@@ -52,4 +54,6 @@ export interface Config {
   logoutUrl: string
   //Use it if you want a different logout URL for external authentication providers
   logoutExternalUrl?: string
+  //URL to the chatpanel module
+  chatpanelModuleUrl?: string
 }
