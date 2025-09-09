@@ -8,9 +8,9 @@
     "logoutUrl": "/logout",
     "cgus": {
       "lang": {
-        "default": "/public/legal-notice.html",
+        "default": "/public/mentions-legales-cookies-cgu.html",
         "eng": "/public/mentions-legales-cookies-cgu_en.html",
-        "fre": "/public/legal-notice.html"
+        "fre": "/public/mentions-legales-cookies-cgu.html"
       },
       "excludedUrls": [
         "/public/legal-notice.html",
