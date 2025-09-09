@@ -13,7 +13,6 @@
         "fre": "/public/legal-notice.html"
       },
       "excludedUrls": [
-        "/login",
         "/public/legal-notice.html",
         "/public/mentions-legales-cookies-cgu_en.html"
       ]

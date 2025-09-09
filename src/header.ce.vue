@@ -54,7 +54,7 @@ const logoutUrl = computed(() =>
 )
 const cgusUrl = computed(() => {
   const cgus = state.config.cgus
-  return cgus.lang[state.lang3 as keyof typeof cgus.lang] ?? cgus.lang.default
+  return cgus.lang[state.lang3] ?? cgus.lang.default
 })
 
 function acceptCGU() {

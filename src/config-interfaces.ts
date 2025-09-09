@@ -54,7 +54,10 @@ export interface Config {
   logoutExternalUrl?: string
   //CGU links
   cgus: {
-    lang: { default: string; eng: string; fre: string }
+    lang: {
+      [code: string]: string
+      default: string
+    }
     excludedUrls: string[]
   }
 }
