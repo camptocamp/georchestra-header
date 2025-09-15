@@ -2,8 +2,7 @@
   "defaultConfig": {
     "hideLogin": false,
     "login": {
-      "url": ":origin/login",
-      "params": [{ "redirect": ":currentUrl" }]
+      "url": ":origin/login"
     },
     "logoutUrl": "/logout",
     "cgus": {
@@ -23,7 +22,15 @@
       "label": "Catalogue",
       "i18n": "catalogue",
       "url": "/datahub/",
-      "activeAppUrl": "/datahub"
+      "activeAppUrl": "/datahub",
+      "hasRole": "ROLE_ANONYMOUS"
+    },
+    {
+      "label": "Catalogue",
+      "i18n": "catalogue",
+      "url": "/geonetwork/",
+      "activeAppUrl": "/geonetwork",
+      "hasRole": "ROLE_USER"
     },
     {
       "label": "Mapstore viewer",
