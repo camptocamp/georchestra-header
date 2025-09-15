@@ -21,16 +21,8 @@
     {
       "label": "Catalogue",
       "i18n": "catalogue",
-      "url": "/datahub/",
-      "activeAppUrl": "/datahub",
-      "hasRole": "ROLE_ANONYMOUS"
-    },
-    {
-      "label": "Catalogue",
-      "i18n": "catalogue",
       "url": "/geonetwork/",
-      "activeAppUrl": "/geonetwork",
-      "hasRole": "ROLE_USER"
+      "activeAppUrl": "/geonetwork"
     },
     {
       "label": "Mapstore viewer",
