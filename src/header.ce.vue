@@ -223,6 +223,7 @@ onMounted(() => {
       v-if="chatbotEndpoint"
       :endpoint="chatbotEndpoint"
       :stylesheet="state.config.stylesheet"
+      :custom-nonce="props.customNonce"
     ></chat-bubble>
   </header>
 </template>
