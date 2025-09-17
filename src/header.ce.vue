@@ -222,6 +222,7 @@ onMounted(() => {
     <chat-bubble
       v-if="chatbotEndpoint"
       :endpoint="chatbotEndpoint"
+      :stylesheet="state.config.stylesheet"
     ></chat-bubble>
   </header>
 </template>
