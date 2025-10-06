@@ -46,4 +46,12 @@ export interface Config {
   lang?: string
   //List of roles considered as admin roles, if admin, triggers a request to /console/private/platform/infos
   adminRoles: string[]
+  //CGU links
+  cgus: {
+    lang: {
+      [code: string]: string
+      default: string
+    }
+    excludedUrls: string[]
+  }
 }

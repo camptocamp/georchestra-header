@@ -8,7 +8,15 @@
       "ROLE_GN_REVIEWER",
       "ROLE_GN_EDITOR",
       "ROLE_MAPSTORE_ADMIN"
-    ]
+    ],
+    "cgus": {
+      "lang": {
+        "default": "/public/cgu.html"
+      },
+      "excludedUrls": [
+        "/public/cgu.html"
+      ]
+    }
   },
   "defaultMenu": [
     {
