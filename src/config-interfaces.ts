@@ -50,6 +50,8 @@ export interface Navigation {
   menus?: Array<Array<Link | Separator | Dropdown>>
 }
 
+export interface GeocontribDropdown extends Dropdown {}
+
 export interface Config {
   //Logo url to display in the header
   logoUrl?: string
