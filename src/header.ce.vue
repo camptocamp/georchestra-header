@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
-import { getUserDetails } from './auth'
+import { getUserDetails, getGeocontribPermissions } from './auth'
 import { getI18n, t } from '@/i18n'
 import { state, replaceUrlsVariables } from '@/shared'
 import { allNodes } from '@/utils'
@@ -8,6 +8,7 @@ import Menu from '@/ui/Menu.vue'
 import AccountItem from '@/ui/AccountItem.vue'
 import Logo from '@/ui/Logo.vue'
 import BurgerIcon from '@/ui/icons/BurgerIcon.vue'
+import GeocontribItem from '@/ui/GeocontribItem.vue'
 
 const props = defineProps<{
   activeApp?: string
@@ -127,6 +128,11 @@ onMounted(() => {
     getUserDetails().then(user => {
       state.user = user
       state.config.stylesheet ??= props.stylesheet
+      if (!user?.anonymous) {
+        getGeocontribPermissions().then(permissions => {
+          state.geocontribPermissions = permissions
+        })
+      }
       if (props.configFile)
         fetch(props.configFile)
           .then(res => res.json())
@@ -275,10 +281,11 @@ onMounted(() => {
   }
 
   .dropdown > li {
-    @apply block text-center hover:bg-primary-light text-gray-700 hover:text-black capitalize;
+    @apply block text-center hover:bg-primary-light text-gray-700 hover:text-black capitalize px-4;
   }
 
-  .dropdown > li > a {
+  .dropdown > li > a,
+  .dropdown > li > button {
     @apply block w-full h-full py-3;
   }
 

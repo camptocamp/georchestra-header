@@ -35,6 +35,8 @@ export interface Dropdown extends MenuItem {
 
 export interface Separator extends MenuItem {}
 
+export interface GeocontribDropdown extends Dropdown {}
+
 export interface Config {
   //Logo url to display in the header
   logoUrl?: string

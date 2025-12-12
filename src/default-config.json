@@ -18,70 +18,8 @@
       "activeAppUrl": "/datahub"
     },
     {
-      "label": "Mapstore viewer",
-      "i18n": "viewer",
-      "url": "/mapstore",
-      "activeAppUrl": "/mapstore"
-    },
-    {
-      "label": "Maps",
-      "i18n": "maps",
-      "url": "/mapstore/#/home",
-      "activeAppUrl": "/mapstore/#/home"
-    },
-    {
-      "label": "Services",
-      "i18n": "services",
-      "url": "/geoserver/web",
-      "activeAppUrl": "/geoserver"
-    },
-    {
-      "label": "Datafeeder",
-      "i18n": "datafeeder",
-      "url": "/import",
-      "activeAppUrl": "/import",
-      "hasRole": "ROLE_SUPERUSER,ROLE_IMPORT"
-    },
-    {
-      "hasRole": "ROLE_SUPERUSER,ROLE_GN_EDITOR,ROLE_GN_ADMIN,ROLE_MAPSTORE_ADMIN",
-      "type": "separator"
-    },
-    {
-      "type": "dropdown",
-      "label": "Administration",
-      "i18n": "admin",
-      "hasRole": "ROLE_SUPERUSER,ROLE_GN_EDITOR,ROLE_GN_ADMIN,ROLE_MAPSTORE_ADMIN,ROLE_ORGADMIN",
-      "items": [
-        {
-          "label": "Geonetwork",
-          "i18n": "catalogue",
-          "url": "/geonetwork/srv/:lang3/catalog.edit#/board",
-          "activeAppUrl": "/geonetwork",
-          "hasRole": "ROLE_GN_EDITOR",
-          "blockedRole": "ROLE_SUPERUSER,ROLE_GN_REVIEWER,ROLE_GN_ADMIN"
-        },
-        {
-          "label": "Geonetwork",
-          "i18n": "catalogue",
-          "url": "/geonetwork/srv/:lang3/admin.console",
-          "activeAppUrl": "/geonetwork",
-          "hasRole": "ROLE_SUPERUSER,ROLE_GN_REVIEWER,ROLE_GN_ADMIN"
-        },
-        {
-          "label": "Viewer",
-          "i18n": "viewer",
-          "url": "/mapstore/#/admin",
-          "activeAppUrl": "/mapstore/#/admin",
-          "hasRole": "ROLE_SUPERUSER,ROLE_MAPSTORE_ADMIN"
-        },
-        {
-          "label": "Console",
-          "i18n": "users",
-          "url": "/console/manager/home",
-          "activeAppUrl": "/console/manager",
-          "hasRole": "ROLE_SUPERUSER,ROLE_ORGADMIN"
-        }
-      ]
+      "type": "geocontrib",
+      "label": "GeoContrib"
     }
   ]
 }
