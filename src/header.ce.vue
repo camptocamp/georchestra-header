@@ -14,6 +14,7 @@ import ChartPieIcon from '@/ui/ChartPieIcon.vue'
 import UsersIcon from '@/ui/UsersIcon.vue'
 import ChevronDownIcon from '@/ui/ChevronDownIcon.vue'
 import { LANG_2_TO_3_MAPPER, t } from '@/i18n'
+import PenIcon from '@/ui/PenIcon.vue'
 
 const props = defineProps<{
   hideLogin?: string
@@ -279,6 +280,20 @@ onMounted(() => {
                 >
                   <CatalogIcon class="icon-dropdown"></CatalogIcon>
                   {{ t('catalogue') }}</a
+                >
+              </li>
+              <li :class="{ active: props.activeApp === 'msadmin' }">
+                <a
+                  href="/metadata-editor"
+                  v-if="
+                    adminRoles?.catalog ||
+                    adminRoles?.catalogAdmin ||
+                    adminRoles?.superUser
+                  "
+                  class="mdeditor"
+                >
+                  <PenIcon class="icon-dropdown"></PenIcon>
+                  {{ t('mdeditor') }}</a
                 >
               </li>
               <li :class="{ active: props.activeApp === 'msadmin' }">
