@@ -15,7 +15,7 @@ function geocontribProjectPathname(): string {
 
 <template>
   <ul
-    class="flex justify-center items-center py-3 gap-3 geocontrib"
+    class="flex items-center py-3 gap-3 geocontrib"
     v-if="!props.isAnonymous && props.geocontribPermissions?.project"
   >
     <li
