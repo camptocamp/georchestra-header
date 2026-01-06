@@ -301,6 +301,13 @@ onMounted(() => {
     @apply cursor-pointer pointer-events-none;
   }
 
+  .geocontrib {
+    padding: 10px 2em;
+    margin: 0 auto;
+    max-width: 1200px;
+    border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+  }
+
   .geocontrib > li {
     background-color: #2c347d;
     color: white;
@@ -312,9 +319,6 @@ onMounted(() => {
   .geocontrib > li:hover {
     background-color: #151a40;
     cursor: pointer;
-  }
-  .geocontrib {
-    background-color: #e1e3f1;
   }
 
   * {
