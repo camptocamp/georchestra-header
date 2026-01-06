@@ -232,6 +232,10 @@ onMounted(() => {
       :custom-nonce="props.customNonce"
     ></chat-bubble>
   </header>
+  <GeocontribItem
+    :geocontrib-permissions="state.geocontribPermissions"
+    :is-anonymous="isAnonymous"
+  />
 </template>
 
 <style>
@@ -295,6 +299,22 @@ onMounted(() => {
 
   .disabled {
     @apply cursor-pointer pointer-events-none;
+  }
+
+  .geocontrib > li {
+    background-color: #2c347d;
+    color: white;
+    padding: 8px 12px;
+  }
+  .geocontrib > li.active {
+    background-color: #151a40;
+  }
+  .geocontrib > li:hover {
+    background-color: #151a40;
+    cursor: pointer;
+  }
+  .geocontrib {
+    background-color: #e1e3f1;
   }
 
   * {
