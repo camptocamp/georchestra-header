@@ -58,10 +58,10 @@ function toggleDropdown(index: number) {
           :href="replaceUrlsVariables(asLink(item).url)"
           class="nav-item-mobile"
           :class="{
-            active: asLink(item).activeAppUrl === state.activeAppUrl,
+            active: asLink(item) === state.activeAppLink,
             disabled: asLink(item).disabled,
           }"
-          @click="state.activeAppUrl = asLink(item).activeAppUrl"
+          @click="state.activeAppLink = asLink(item)"
         >
           {{ asLink(item).i18n ? t(asLink(item).i18n!) : asLink(item).label }}
         </a>
@@ -92,10 +92,10 @@ function toggleDropdown(index: number) {
               :href="replaceUrlsVariables(sub.url)"
               class="block py-3 px-10 text-sm border-b last:border-0 text-center"
               :class="{
-                active: sub.activeAppUrl === state.activeAppUrl,
+                active: sub === state.activeAppLink,
                 disabled: sub.disabled,
               }"
-              @click="state.activeAppUrl = sub.activeAppUrl"
+              @click="state.activeAppLink = sub"
             >
               {{ sub.i18n ? t(sub.i18n) : sub.label }}
             </a>
