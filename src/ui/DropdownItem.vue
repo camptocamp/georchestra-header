@@ -39,9 +39,9 @@ const props = defineProps<{
         >
           <li
             v-if="checkCondition(subitem)"
-            @click="state.activeAppUrl = (subitem as Link).activeAppUrl"
+            @click="state.activeAppLink = subitem as Link"
             :class="{
-                        active: (subitem as Link).activeAppUrl == state.activeAppUrl,
+                        active: (subitem as Link).activeAppUrl == state.activeAppLink?.activeAppUrl,
                         disabled: (subitem as Link).disabled
                       }"
             class="px-4 transition-colors duration-100 hover:bg-gray-50"

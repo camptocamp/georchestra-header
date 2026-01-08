@@ -39,7 +39,6 @@ const logoutUrl = computed(() =>
       : state.config.logoutUrl
   )
 )
-const activeAppUrl = computed(() => state.activeAppLink?.activeAppUrl)
 const chatbotEndpoint = computed(() => state.activeAppLink?.chatbotEndpoint)
 
 function determineActiveApp(): void {
@@ -81,20 +80,6 @@ function determineActiveApp(): void {
       state.activeAppLink = link
     }
   }
-}
-
-function allNodes(obj: any, key: string, array?: Link[]): Link[] {
-  array = array || []
-  if ('object' === typeof obj) {
-    for (let k in obj) {
-      if (k === key) {
-        array.push(obj)
-      } else {
-        allNodes(obj[k], key, array)
-      }
-    }
-  }
-  return array
 }
 
 function setI18nAndActiveApp(i18n?: any) {

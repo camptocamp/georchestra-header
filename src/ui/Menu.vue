@@ -31,9 +31,9 @@ function toggleDropdown(index: number) {
           <a
             :href="(item as Link).url"
             class="nav-item-mobile"
-            @click="state.activeAppUrl = (item as Link).activeAppUrl"
+            @click="state.activeAppLink = item as Link"
             :class="{
-                  active: (item as Link).activeAppUrl == state.activeAppUrl,
+                  active: (item as Link).activeAppUrl == state.activeAppLink?.activeAppUrl,
                   disabled: (item as Link).disabled
                 }"
           >
@@ -74,9 +74,9 @@ function toggleDropdown(index: number) {
               >
                 <li
                   v-if="checkCondition(subitem)"
-                  @click="state.activeAppUrl = (subitem as Link).activeAppUrl"
+                  @click="state.activeAppLink = subitem as Link"
                   :class="{
-                        active: (subitem as Link).activeAppUrl == state.activeAppUrl,
+                        active: (subitem as Link).activeAppUrl == state.activeAppLink?.activeAppUrl,
                         disabled: (subitem as Link).disabled
                       }"
                 >

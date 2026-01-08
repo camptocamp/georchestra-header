@@ -11,9 +11,9 @@ const props = defineProps<{
   <a
     :href="props.item.url"
     class="nav-item"
-    @click="state.activeAppUrl = props.item.activeAppUrl"
+    @click="state.activeAppLink = props.item"
     :class="{
-      active: props.item.activeAppUrl == state.activeAppUrl,
+      active: props.item == state.activeAppLink,
       disabled: props.item.disabled,
     }"
   >

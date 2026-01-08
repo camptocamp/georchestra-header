@@ -12,8 +12,9 @@ export const state = reactive({
   lang3: 'eng',
   loaded: false,
   matchedRouteScore: 0,
-  activeAppUrl: '' as string | undefined,
+  activeAppLink: null as null | Link,
   activeDropdown: null as null | number,
+  geocontribPermissions: null as null | any,
 })
 
 export function checkCondition(item: Link | Separator | Dropdown): boolean {
@@ -40,7 +41,7 @@ export function checkCondition(item: Link | Separator | Dropdown): boolean {
 
 export function getItemSelectedTitle(items: Array<Link> | undefined): string {
   const selectedItem = items?.find(
-    item => item.activeAppUrl === state.activeAppUrl
+    item => item.activeAppUrl === state.activeAppLink?.activeAppUrl
   )
   return selectedItem ? t(selectedItem.i18n || selectedItem.label) : ''
 }
