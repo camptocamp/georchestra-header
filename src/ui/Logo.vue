@@ -8,12 +8,15 @@ const props = defineProps<{
 </script>
 
 <template>
-  <a href="/" class="flex justify-center items-center xl:px-3 md:px-2 py-2">
+  <a
+    href="/"
+    class="flex justify-center items-center xl:px-3 md:px-2 py-2 h-full"
+  >
     <img
       v-if="props.logoUrl || state.config.logoUrl"
       :src="props.logoUrl || state.config.logoUrl"
       alt="geOrchestra logo"
-      class="max-w-24 xl:max-w-32 min-w-[15px] logo"
+      class="max-w-24 xl:max-w-32 min-w-[15px] logo h-full"
       :class="{ 'lg:hidden xl:block sm:block': state.config.minimizedLogoUrl }"
     />
     <GeorchestraLogo v-else></GeorchestraLogo>

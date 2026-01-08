@@ -185,15 +185,13 @@ onMounted(() => {
         :logout-url="logoutUrl"
       />
     </div>
-    <div class="flex-col lg:hidden w-full h-full">
+    <div class="flex-col lg:hidden w-full h-full bg-white">
       <div
-        class="h-full inline-flex items-center justify-start align-middle px-4 py-6 shrink-0 w-full bg-primary/10"
+        class="h-full inline-flex items-center justify-start align-middle px-4 shrink-0 w-full"
       >
-        <div class="grow flex justify-start items-center py-3">
-          <span class="inline-flex items-center rounded-full">
-            <BurgerIcon class="mr-3" />
-            <Logo :logoUrl="props.logoUrl || state.config.logoUrl" />
-          </span>
+        <div class="grow flex justify-start items-center h-full">
+          <BurgerIcon class="mr-3 text-white" />
+          <Logo :logoUrl="props.logoUrl || state.config.logoUrl" />
         </div>
         <AccountItem
           :is-anonymous="isAnonymous"
