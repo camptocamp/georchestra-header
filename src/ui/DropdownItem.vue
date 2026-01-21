@@ -70,8 +70,8 @@ const props = defineProps<{
               <i
                 v-else-if="subitem.icon"
                 :class="subitem.icon"
-                class="pr-1 block pb-[2px] subitem-icon"
-                style="font-size: 1rem"
+                class="pr-2 block subitem-icon"
+                style="font-size: 1.2rem"
               ></i>
               <span class="block">{{
                 subitem.i18n ? t(subitem.i18n) : subitem.label
