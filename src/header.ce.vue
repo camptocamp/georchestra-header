@@ -211,7 +211,7 @@ onMounted(() => {
         :logout-url="logoutUrl"
       />
     </div>
-    <div class="flex-col lg:hidden w-full h-full">
+    <div class="flex-col lg:hidden w-full h-full bg-white">
       <div
         class="h-full flex items-center justify-between px-4 py-1 shrink-0 w-full bg-primary/10"
       >

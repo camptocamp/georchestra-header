@@ -11,11 +11,8 @@ const props = defineProps<{
 <template>
   <div class="group inline-block relative">
     <button class="nav-item after:hover:scale-x-0 flex items-center">
-      <span
-        :class="[
-          'flex items-center lg:mr-2 md:mr-1 first-letter:capitalize',
-          props.item.customClass,
-        ]"
+      <div
+        :class="['flex items-center lg:mr-2 md:mr-1', props.item.customClass]"
       >
         <img
           v-if="props.item.iconUrl"
@@ -30,8 +27,10 @@ const props = defineProps<{
           class="pr-1 block pb-[2px] subitem-icon"
           style="font-size: 1rem"
         ></i>
-        {{ props.item.i18n ? t(props.item.i18n) : props.item.label }}</span
-      >
+        <span class="first-letter:capitalize">{{
+          props.item.i18n ? t(props.item.i18n) : props.item.label
+        }}</span>
+      </div>
       <ChevronDownIcon
         class="w-4 h-4 transition-transform duration-200 group-hover:rotate-180"
         stroke-width="4"
