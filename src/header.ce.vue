@@ -30,7 +30,9 @@ const loginUrl = computed(() => {
     const key = Object.keys(param)[0]
     href.searchParams.set(key, replaceUrlsVariables(param[key]))
   }
-  return href.toString()
+  return state.activeAppLink?.loginUrl
+    ? replaceUrlsVariables(state.activeAppLink?.loginUrl)
+    : href.toString()
 })
 const logoutUrl = computed(() =>
   replaceUrlsVariables(

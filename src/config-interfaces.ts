@@ -27,6 +27,8 @@ export interface Link extends AbstractBaseInterface {
   iconUrl: string
   //URL for the chatbot endpoint
   chatbotEndpoint?: string
+  //Forced login url
+  loginUrl?: string
 }
 
 export interface Dropdown extends AbstractBaseInterface {
