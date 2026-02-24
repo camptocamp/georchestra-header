@@ -150,6 +150,32 @@ onMounted(() => {
             >{{ t('datafeeder') }}</a
           >
           <li
+            class="admin group/datakern inline-block relative"
+            v-if="!isAnonymous"
+          >
+            <button
+              class="nav-item after:scale-x-0 after:hover:scale-x-0 flex items-center"
+            >
+              <span class="mr-2 first-letter:capitalize">Datakern</span>
+              <ChevronDownIcon
+                class="w-4 h-4"
+                stroke-width="4"
+              ></ChevronDownIcon>
+            </button>
+            <ul
+              class="absolute hidden group-hover/datakern:block border rounded w-full admin-dropdown z-[1002] bg-white"
+            >
+              <li :class="{ active: locationEndsWith('/datakern/') }">
+                <a href="/datakern/" class="normal-case">Tous mes JDDs</a>
+              </li>
+              <li>
+                <a href="/datakern/import" class="normal-case"
+                  >Ajouter un JDD</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li
             class="admin group/projects inline-block relative"
             v-if="!isAnonymous"
           >
