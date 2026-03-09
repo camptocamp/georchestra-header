@@ -21,6 +21,7 @@ const props = defineProps<{
   legacyUrl?: string
   style?: string
   stylesheet?: string
+  height?: number
 }>()
 
 const state = reactive({
@@ -68,7 +69,9 @@ onMounted(() => {
       v-bind:src="`${props.legacyUrl}${
         props.activeApp ? `?active=${props.activeApp}` : ''
       }`"
-      v-bind:style="props.style"
+      v-bind:style="
+        props.style || `height: ${props.height}px; border: none;width: 100%;`
+      "
     ></iframe>
   </div>
   <header v-else class="host h-[80px] text-base" v-bind:style="props.style">
