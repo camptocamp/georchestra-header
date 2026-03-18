@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
-import { getUserDetails } from './auth'
+import { getUserDetails, getGeocontribPermissions } from './auth'
 import { getI18n, t } from '@/i18n'
 import { state, replaceUrlsVariables } from '@/shared'
 import { allNodes } from '@/utils'
@@ -97,6 +97,11 @@ onMounted(() => {
     getUserDetails().then(user => {
       state.user = user
       state.config.stylesheet ??= props.stylesheet
+      if (!user?.anonymous) {
+        getGeocontribPermissions().then(permissions => {
+          state.geocontribPermissions = permissions
+        })
+      }
       if (props.configFile)
         fetch(props.configFile)
           .then(res => res.json())

@@ -26,6 +26,7 @@ export const state = reactive({
   matchedRouteScore: 0,
   activeAppLink: null as null | Link,
   activeDropdown: null as null | number,
+  geocontribPermissions: null as null | any,
 })
 
 export function checkCondition(item: Link | Separator | Dropdown): boolean {

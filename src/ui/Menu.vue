@@ -6,6 +6,7 @@ import DropdownItem from '@/ui/DropdownItem.vue'
 import LinkItem from '@/ui/LinkItem.vue'
 import ChevronDownIcon from '@/ui/icons/ChevronDownIcon.vue'
 import { t } from '@/i18n'
+import GeocontribItem from '@/ui/GeocontribItem.vue'
 
 type MenuItem = Link | Separator | Dropdown
 
@@ -41,6 +42,11 @@ function toggleDropdown(index: number) {
 
         <DropdownItem
           v-else-if="item.type === 'dropdown'"
+          :item="asDropdown(item)"
+        />
+
+        <GeocontribItem
+          v-else-if="item.type === 'geocontrib'"
           :item="asDropdown(item)"
         />
       </template>
