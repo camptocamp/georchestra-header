@@ -159,8 +159,14 @@ onMounted(() => {
       v-if="state.config.iconsUrl"
       :nonce="props.customNonce"
     />
+    <div class="h-[40px] bg-primary flex pl-8 justify-center">
+      <span class="self-center text-white text-lg font-bold uppercase">{{
+        t('pre.header.title')
+      }}</span>
+    </div>
     <div
-      class="justify-between text-slate-600 lg:flex hidden h-full bg-white lg:text-sm"
+      class="justify-between text-slate-600 lg:flex hidden bg-white lg:text-sm"
+      style="height: calc(100% - 40px)"
     >
       <div class="flex header-left flex-1 min-w-0">
         <Logo :logoUrl="props.logoUrl || state.config.logoUrl" />
@@ -187,7 +193,7 @@ onMounted(() => {
         :logout-url="logoutUrl"
       />
     </div>
-    <div class="flex-col lg:hidden w-full h-full">
+    <div class="flex-col lg:hidden w-full" style="height: calc(100% - 40px)">
       <div
         class="h-full flex items-center justify-between px-4 py-1 shrink-0 w-full bg-primary/10"
       >
