@@ -296,7 +296,7 @@ onMounted(() => {
   }
 
   .dropdown > li {
-    @apply block text-center hover:bg-primary-light text-gray-700 hover:text-black capitalize px-4;
+    @apply block text-center hover:bg-primary-light text-gray-700 hover:text-black first-letter:capitalize px-4;
   }
 
   .dropdown > li > a,

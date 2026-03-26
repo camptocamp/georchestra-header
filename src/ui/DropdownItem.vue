@@ -57,7 +57,7 @@ const props = defineProps<{
           >
             <a
               :href="replaceUrlsVariables(subitem.url)"
-              class="capitalize !flex justify-start items-start"
+              class="first-letter:capitalize !flex justify-start items-start"
             >
               <img
                 v-if="subitem.iconUrl"
