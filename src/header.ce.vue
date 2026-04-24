@@ -38,6 +38,9 @@ const logoutUrl = computed(() =>
       : state.config.logoutUrl
   )
 )
+const noheader = computed(
+  () => new URLSearchParams(window.location.search).get('noheader') === 'true'
+)
 
 function determineActiveApp(): void {
   const navigationSource =
@@ -137,7 +140,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="props.legacyHeader === 'true'">
+  <div v-if="!noheader && props.legacyHeader === 'true'">
     <iframe
       class="w-full"
       v-bind:src="`${props.legacyUrl}${
@@ -147,7 +150,7 @@ onMounted(() => {
     ></iframe>
   </div>
   <header
-    v-else-if="state.loaded"
+    v-else-if="!noheader && state.loaded"
     class="host h-[80px] text-base"
     :class="{ 'has-custom-stylesheet': state.config.stylesheet }"
     :style="`height:${props.height}px`"
