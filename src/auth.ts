@@ -82,8 +82,8 @@ export async function getGeocontribPermissions(): Promise<any> {
       return {
         project: project,
         admin:
-          user_info.user.is_administrator ||
-          user_info.user.is_superuser ||
+          user_info.user?.is_administrator ||
+          user_info.user?.is_superuser ||
           (project && user_level_project[project] === 'Administrateur projet'),
       }
     }
