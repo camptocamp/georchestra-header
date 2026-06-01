@@ -72,6 +72,14 @@ function toggleDropdown(index: number) {
           {{ asLink(item).i18n ? t(asLink(item).i18n!) : asLink(item).label }}
         </a>
 
+        <a
+          v-else-if="item.type === 'geocontrib'"
+          href="/geocontrib/"
+          class="nav-item-mobile"
+        >
+          {{ asLink(item).i18n ? t(asLink(item).i18n!) : asLink(item).label }}
+        </a>
+
         <div v-else-if="item.type === 'dropdown'" class="w-full">
           <button
             @click="toggleDropdown(index)"
@@ -92,19 +100,21 @@ function toggleDropdown(index: number) {
             v-show="state.activeDropdown === index"
             class="bg-gray-50 text-center"
           >
-            <a
-              v-for="sub in asDropdown(item).items"
-              :key="sub.label"
-              :href="replaceUrlsVariables(sub.url)"
-              class="block py-3 px-10 text-sm border-b last:border-0 text-center"
-              :class="{
-                active: sub === state.activeAppLink,
-                disabled: sub.disabled,
-              }"
-              @click="state.activeAppLink = sub"
-            >
-              {{ sub.i18n ? t(sub.i18n) : sub.label }}
-            </a>
+            <template v-for="sub in asDropdown(item).items" :key="sub.label">
+              <a
+                v-if="checkCondition(sub)"
+                :key="sub.label"
+                :href="replaceUrlsVariables(sub.url)"
+                class="block py-3 px-10 text-sm border-b last:border-0 text-center"
+                :class="{
+                  active: sub === state.activeAppLink,
+                  disabled: sub.disabled,
+                }"
+                @click="state.activeAppLink = sub"
+              >
+                {{ sub.i18n ? t(sub.i18n) : sub.label }}
+              </a>
+            </template>
           </div>
         </div>
       </template>
