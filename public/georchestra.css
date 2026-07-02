@@ -1,4 +1,4 @@
 header {
-    --georchestra-header-primary: #183066;
+    --georchestra-header-primary: #000;
     --georchestra-header-primary-light: color-mix(in srgb,var(--georchestra-header-primary),#fff 90%);
 }

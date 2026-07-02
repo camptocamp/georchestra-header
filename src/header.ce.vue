@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { getUserDetails } from './auth'
 import { getI18n, t } from '@/i18n'
 import { state, replaceUrlsVariables } from '@/shared'
@@ -19,6 +19,55 @@ const props = defineProps<{
   logoUrl?: string
   customNonce?: string
 }>()
+interface RssItem {
+  link: string
+  title: string
+  date: string
+}
+
+const rssItems = ref<RssItem[]>([])
+const currentRssIndex = ref(0)
+let rssInterval: ReturnType<typeof setInterval> | null = null
+
+function formatRssDate(dateStr: string): string {
+  const d = new Date(dateStr)
+  const month = ('0' + (d.getMonth() + 1)).slice(-2)
+  const day = ('0' + d.getDate()).slice(-2)
+  return `${day}/${month}/${d.getFullYear()}`
+}
+
+async function fetchRssNews(): Promise<void> {
+  const RSS_URL = `https://${window.location.hostname}/accueil/rss.xml`
+  try {
+    const text = await fetch(RSS_URL).then(r => r.text())
+    const data = new DOMParser().parseFromString(text, 'text/xml')
+    const news: RssItem[] = []
+    data.querySelectorAll('item').forEach(el => {
+      const title = el.querySelector('title')?.textContent ?? ''
+      if (title !== 'Accueil') {
+        news.push({
+          title,
+          date: formatRssDate(el.querySelector('pubDate')?.textContent ?? ''),
+          link: el.querySelector('link')?.textContent ?? '',
+        })
+      }
+    })
+    rssItems.value = news
+    if (news.length > 1) {
+      rssInterval = setInterval(() => {
+        currentRssIndex.value =
+          (currentRssIndex.value + 1) % rssItems.value.length
+      }, 5000)
+    }
+  } catch {
+    // RSS unavailable — news bar stays hidden
+  }
+}
+
+function nextRssItem(): void {
+  currentRssIndex.value = (currentRssIndex.value + 1) % rssItems.value.length
+}
+
 const navigation = computed(() => state.navigation)
 const isAnonymous = computed(() => !state.user || state.user.anonymous)
 const isWarned = computed(() => state.user?.warned)
@@ -92,10 +141,15 @@ function setI18nAndActiveApp(i18n?: any) {
   state.loaded = true
 }
 
+onUnmounted(() => {
+  if (rssInterval !== null) clearInterval(rssInterval)
+})
+
 onMounted(() => {
   if (props.legacyHeader !== 'true') {
     getUserDetails().then(user => {
       state.user = user
+      if (!user.anonymous) fetchRssNews()
       state.config.stylesheet ??= props.stylesheet
       if (props.configFile)
         fetch(props.configFile)
@@ -160,7 +214,7 @@ onMounted(() => {
       :nonce="props.customNonce"
     />
     <div
-      class="justify-between text-slate-600 lg:flex hidden h-full bg-white lg:text-sm"
+      class="justify-between text-slate-600 lg:flex h-[60px] hidden bg-white lg:text-sm"
     >
       <div class="flex header-left flex-1 min-w-0">
         <Logo :logoUrl="props.logoUrl || state.config.logoUrl" />
@@ -186,6 +240,49 @@ onMounted(() => {
         :login-url="loginUrl"
         :logout-url="logoutUrl"
       />
+    </div>
+    <div
+      v-if="!isAnonymous && rssItems.length > 0"
+      class="lg:flex hidden h-[20px] bg-black text-slate-100 text-xs px-2 items-center gap-1 justify-between"
+    >
+      <div>
+        <b class="pr-3">Actualités:</b>
+        <a
+          :href="rssItems[currentRssIndex].link"
+          target="_blank"
+          rel="noopener"
+          class="hover:underline"
+        >
+          {{ rssItems[currentRssIndex].date }} -
+          {{ rssItems[currentRssIndex].title }}
+        </a>
+      </div>
+      <div class="cursor-pointer" v-on:click="nextRssItem()">
+        <svg
+          width="15px"
+          height="15px"
+          color="currentColor"
+          stroke-width="1.7"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M4 14C2.89543 14 2 13.1046 2 12C2 10.8954 2.89543 10 4 10C5.10457 10 6 10.8954 6 12C6 13.1046 5.10457 14 4 14Z"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></path>
+          <path
+            d="M9 12H22M22 12L19 9M22 12L19 15"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></path>
+        </svg>
+      </div>
     </div>
     <div class="flex-col lg:hidden w-full h-full">
       <div

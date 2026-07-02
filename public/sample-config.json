@@ -3,75 +3,96 @@
     "stylesheet": "/public/georchestra.css",
     "logoUrl": "/public/logoipsum-385.svg",
     "minimizedLogoUrl": "/public/logoipsum-square.png",
-    "hideLogin": false,
-    "iconsUrl": "https://cdn.jsdelivr.net/gh/iconoir-icons/iconoir@main/css/iconoir.css",
-    "lang": "fr",
-    "login": {
-      "url": ":origin/login",
-      "params": [{ "redirect": ":origin/success" }]
-    },
-    "logoutUrl": "/logout"
+    "hideLogin": true,
+    "lang": "fr"
   },
   "navigation": {
     "class": "justify-between",
     "menus": [
       [
         {
-          "label": "Map stuff:",
-          "url": "",
-          "disabled": true
+          "label": "Actualités",
+          "url": "/accueil/actualites",
+          "activeAppUrl": "/accueil/actualites"
         },
         {
-          "label": "WMS/WFS",
-          "i18n": "customi18n",
-          "url": "/geoserver/web",
-          "activeAppUrl": "includes:/geoserver",
-          "icon": "iconoir-map"
+          "label": "Catalogue",
+          "url": "/geonetwork/",
+          "activeAppUrl": "/geonetwork"
+        },
+        {
+          "label": "Mapstore viewer",
+          "i18n": "viewer",
+          "url": "/mapstore",
+          "activeAppUrl": "/mapstore"
+        },
+        {
+          "label": "Maps",
+          "i18n": "maps",
+          "url": "/mapstore/#/home",
+          "activeAppUrl": "/mapstore/#/home"
+        },
+        {
+          "label": "Fichiers",
+          "url": "https://transferts.si.rennes.fr/s/Smkoe4b4zjdxywe",
+          "activeAppUrl": "https://transferts.si.rennes.fr/s/Smkoe4b4zjdxywe"
+        },
+        {
+          "label": "Aide",
+          "url": "/accueil/aide",
+          "activeAppUrl": "/accueil/aide"
         }
       ],
       [
         {
           "type": "dropdown",
-          "label": "A dropdown",
+          "label": "Administration",
+          "i18n": "admin",
+          "hasRole": "ROLE_SUPERUSER,ROLE_GN_ADMIN,ROLE_MAPSTORE_ADMIN,ROLE_ORGADMIN,ROLE_ADMINISTRATOR,ROLE_MAELSTRO",
           "items": [
             {
-              "label": "Console",
-              "i18n": "users",
-              "url": "/console/manager/home",
-              "activeAppUrl": "/console",
-              "icon": "iconoir-globe"
+              "label": "GeoServer",
+              "i18n": "catalogue",
+              "url": "/geoserver/web",
+              "activeAppUrl": "/geoserver/web",
+              "hasRole": "ROLE_ADMINISTRATOR"
             },
             {
               "label": "Geonetwork",
               "i18n": "catalogue",
-              "url": "/geonetwork/srv/:lang3/catalog.edit#/board",
-              "activeAppUrl": "/geonetwork"
+              "url": "/geonetwork/srv/:lang3/admin.console",
+              "activeAppUrl": "/geonetwork",
+              "hasRole": "ROLE_SUPERUSER,ROLE_GN_REVIEWER,ROLE_GN_ADMIN"
             },
             {
-              "label": "A disabled long name link",
-              "disabled": true
+              "label": "Analytics",
+              "url": "/analytics",
+              "activeAppUrl": "/analytics",
+              "hasRole": "ROLE_SUPERUSER"
+            },
+            {
+              "label": "Viewer",
+              "i18n": "viewer",
+              "url": "/mapstore/#/admin",
+              "activeAppUrl": "/mapstore/#/admin",
+              "hasRole": "ROLE_MAPSTORE_ADMIN"
+            },
+            {
+              "label": "Console",
+              "i18n": "users",
+              "url": "/console/manager/home",
+              "activeAppUrl": "/console/manager",
+              "hasRole": "ROLE_SUPERUSER,ROLE_ORGADMIN"
+            },
+            {
+              "label": "Maelstro",
+              "url": "/maelstro/",
+              "activeAppUrl": "/maelstro/",
+              "hasRole": "ROLE_SUPERUSER,ROLE_MAELSTRO"
             }
           ]
-        },
-        {
-          "label": "Superset admin stuff",
-          "url": "/superset",
-          "activeAppUrl": "/superset",
-          "hasRole": "ROLE_SUPERUSER,ROLE_SUPERSET_*",
-          "icon": "iconoir-graph-up"
         }
       ]
     ]
-  },
-  "i18n": {
-    "en": {
-      "customi18n": "WMS/WFS service"
-    },
-    "fr": {
-      "customi18n": "Service WMS/WFS"
-    },
-    "es": {
-      "customi18n": "Servicio WMS/WFS"
-    }
   }
 }
