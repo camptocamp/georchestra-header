@@ -197,7 +197,7 @@ onMounted(() => {
   </div>
   <header
     v-else-if="state.loaded"
-    class="host h-[80px] text-base"
+    class="host h-[90px] text-base"
     :class="{ 'has-custom-stylesheet': state.config.stylesheet }"
     :style="`height:${props.height}px`"
   >
@@ -214,7 +214,7 @@ onMounted(() => {
       :nonce="props.customNonce"
     />
     <div
-      class="justify-between text-slate-600 lg:flex h-[60px] hidden bg-white lg:text-sm"
+      class="justify-between text-slate-600 lg:flex h-[70px] hidden bg-white lg:text-sm"
     >
       <div class="flex header-left flex-1 min-w-0">
         <Logo :logoUrl="props.logoUrl || state.config.logoUrl" />

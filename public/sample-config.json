@@ -1,8 +1,8 @@
 {
   "config": {
     "stylesheet": "/public/georchestra.css",
-    "logoUrl": "/public/logoipsum-385.svg",
-    "minimizedLogoUrl": "/public/logoipsum-square.png",
+    "logoUrl": "https://portail-test.sig.rennesmetropole.fr/header/img/rmsig_logo_int.svg",
+    "minimizedLogoUrl": "https://portail-test.sig.rennesmetropole.fr/header/img/rmsig_logo_mobile.svg",
     "hideLogin": true,
     "lang": "fr"
   },
@@ -17,8 +17,8 @@
         },
         {
           "label": "Catalogue",
-          "url": "/geonetwork/",
-          "activeAppUrl": "/geonetwork"
+          "url": "/datahub/",
+          "activeAppUrl": "/datahub"
         },
         {
           "label": "Mapstore viewer",
@@ -52,7 +52,7 @@
           "items": [
             {
               "label": "GeoServer",
-              "i18n": "catalogue",
+              "i18n": "geoserver",
               "url": "/geoserver/web",
               "activeAppUrl": "/geoserver/web",
               "hasRole": "ROLE_ADMINISTRATOR"
