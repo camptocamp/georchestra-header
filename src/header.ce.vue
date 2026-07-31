@@ -196,101 +196,45 @@ onMounted(() => {
     ></iframe>
   </div>
   <header
-    v-else-if="state.loaded"
+    v-else
     class="host h-[90px] text-base"
     :class="{ 'has-custom-stylesheet': state.config.stylesheet }"
     :style="`height:${props.height}px`"
   >
-    <link
-      rel="stylesheet"
-      :href="state.config.stylesheet"
-      v-if="state.config.stylesheet"
-      :nonce="props.customNonce"
-    />
-    <link
-      rel="stylesheet"
-      :href="state.config.iconsUrl"
-      v-if="state.config.iconsUrl"
-      :nonce="props.customNonce"
-    />
-    <div
-      class="justify-between text-slate-600 lg:flex h-[70px] hidden bg-white lg:text-sm"
-    >
-      <div class="flex header-left flex-1 min-w-0">
-        <Logo :logoUrl="props.logoUrl || state.config.logoUrl" />
-        <nav
-          :class="[
-            'flex items-center font-semibold header-nav grow',
-            navigation.class || 'justify-start',
-          ]"
-        >
-          <Menu :items="navigation?.menus ?? []" />
-
-          <span class="text-gray-400 text-xs" v-if="isWarned">
-            <a href="/console/account/changePassword">
-              {{ t('remaining_days_msg_part1') }} {{ remainingDays }}
-              {{ t('remaining_days_msg_part2') }}
-              {{ t('remaining_days_msg_part3') }}</a
-            ></span
-          >
-        </nav>
-      </div>
-      <AccountItem
-        :is-anonymous="isAnonymous"
-        :login-url="loginUrl"
-        :logout-url="logoutUrl"
+    <template v-if="state.loaded">
+      <link
+        rel="stylesheet"
+        :href="state.config.stylesheet"
+        v-if="state.config.stylesheet"
+        :nonce="props.customNonce"
       />
-    </div>
-    <div
-      v-if="!isAnonymous && rssItems.length > 0"
-      class="lg:flex hidden h-[20px] bg-black text-slate-100 text-xs px-2 items-center gap-1 justify-between"
-    >
-      <div>
-        <b class="pr-3">Actualités:</b>
-        <a
-          :href="rssItems[currentRssIndex].link"
-          target="_blank"
-          rel="noopener"
-          class="hover:underline"
-        >
-          {{ rssItems[currentRssIndex].date }} -
-          {{ rssItems[currentRssIndex].title }}
-        </a>
-      </div>
-      <div class="cursor-pointer" v-on:click="nextRssItem()">
-        <svg
-          width="15px"
-          height="15px"
-          color="currentColor"
-          stroke-width="1.7"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M4 14C2.89543 14 2 13.1046 2 12C2 10.8954 2.89543 10 4 10C5.10457 10 6 10.8954 6 12C6 13.1046 5.10457 14 4 14Z"
-            stroke="currentColor"
-            stroke-width="1.7"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          ></path>
-          <path
-            d="M9 12H22M22 12L19 9M22 12L19 15"
-            stroke="currentColor"
-            stroke-width="1.7"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          ></path>
-        </svg>
-      </div>
-    </div>
-    <div class="flex-col lg:hidden w-full h-full">
+      <link
+        rel="stylesheet"
+        :href="state.config.iconsUrl"
+        v-if="state.config.iconsUrl"
+        :nonce="props.customNonce"
+      />
       <div
-        class="h-full flex items-center justify-between px-4 py-1 shrink-0 w-full bg-primary/10"
+        class="justify-between text-slate-600 lg:flex h-[70px] hidden bg-white lg:text-sm"
       >
-        <div class="h-full flex">
-          <BurgerIcon class="mr-3" />
+        <div class="flex header-left flex-1 min-w-0">
           <Logo :logoUrl="props.logoUrl || state.config.logoUrl" />
+          <nav
+            :class="[
+              'flex items-center font-semibold header-nav grow',
+              navigation.class || 'justify-start',
+            ]"
+          >
+            <Menu :items="navigation?.menus ?? []" />
+
+            <span class="text-gray-400 text-xs" v-if="isWarned">
+              <a href="/console/account/changePassword">
+                {{ t('remaining_days_msg_part1') }} {{ remainingDays }}
+                {{ t('remaining_days_msg_part2') }}
+                {{ t('remaining_days_msg_part3') }}</a
+              ></span
+            >
+          </nav>
         </div>
         <AccountItem
           :is-anonymous="isAnonymous"
@@ -298,15 +242,73 @@ onMounted(() => {
           :logout-url="logoutUrl"
         />
       </div>
-
       <div
-        class="absolute z-[1000] bg-white w-full duration-100 transition-opacity ease-in-out"
+        v-if="!isAnonymous && rssItems.length > 0"
+        class="lg:flex hidden h-[20px] bg-black text-slate-100 text-xs px-2 items-center gap-1 justify-between"
       >
-        <nav class="flex flex-col font-semibold" v-if="state.mobileMenuOpen">
-          <Menu :items="navigation?.menus ?? []" />
-        </nav>
+        <div>
+          <b class="pr-3">Actualités:</b>
+          <a
+            :href="rssItems[currentRssIndex].link"
+            target="_blank"
+            rel="noopener"
+            class="hover:underline"
+          >
+            {{ rssItems[currentRssIndex].date }} -
+            {{ rssItems[currentRssIndex].title }}
+          </a>
+        </div>
+        <div class="cursor-pointer" v-on:click="nextRssItem()">
+          <svg
+            width="15px"
+            height="15px"
+            color="currentColor"
+            stroke-width="1.7"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4 14C2.89543 14 2 13.1046 2 12C2 10.8954 2.89543 10 4 10C5.10457 10 6 10.8954 6 12C6 13.1046 5.10457 14 4 14Z"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+            <path
+              d="M9 12H22M22 12L19 9M22 12L19 15"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+        </div>
       </div>
-    </div>
+      <div class="flex-col lg:hidden w-full h-full">
+        <div
+          class="h-full flex items-center justify-between px-4 py-1 shrink-0 w-full bg-primary/10"
+        >
+          <div class="h-full flex">
+            <BurgerIcon class="mr-3" />
+            <Logo :logoUrl="props.logoUrl || state.config.logoUrl" />
+          </div>
+          <AccountItem
+            :is-anonymous="isAnonymous"
+            :login-url="loginUrl"
+            :logout-url="logoutUrl"
+          />
+        </div>
+
+        <div
+          class="absolute z-[1000] bg-white w-full duration-100 transition-opacity ease-in-out"
+        >
+          <nav class="flex flex-col font-semibold" v-if="state.mobileMenuOpen">
+            <Menu :items="navigation?.menus ?? []" />
+          </nav>
+        </div>
+      </div>
+    </template>
   </header>
 </template>
 
@@ -314,6 +316,10 @@ onMounted(() => {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:host {
+  display: block;
+}
 
 .host {
   -webkit-text-size-adjust: 100%;
