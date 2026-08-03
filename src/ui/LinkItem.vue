@@ -10,6 +10,8 @@ const props = defineProps<{
 <template>
   <a
     :href="props.item.url"
+    :target="props.item.target"
+    :rel="props.item.target === '_blank' ? 'noopener noreferrer' : undefined"
     class="nav-item"
     @click="state.activeAppLink = props.item"
     :class="[

@@ -25,6 +25,8 @@ export interface Link extends AbstractBaseInterface {
   customClass?: string
   // to use icon from url instead icon from lib
   iconUrl: string
+  //Target to open the link in (e.g. '_blank' to open in a new tab)
+  target?: string
 }
 
 export interface Dropdown extends AbstractBaseInterface {

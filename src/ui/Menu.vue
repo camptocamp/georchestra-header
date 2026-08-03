@@ -56,6 +56,10 @@ function toggleDropdown(index: number) {
         <a
           v-if="!item.type"
           :href="replaceUrlsVariables(asLink(item).url)"
+          :target="asLink(item).target"
+          :rel="
+            asLink(item).target === '_blank' ? 'noopener noreferrer' : undefined
+          "
           class="nav-item-mobile"
           :class="{
             active: asLink(item) === state.activeAppLink,
@@ -90,6 +94,8 @@ function toggleDropdown(index: number) {
               v-for="sub in asDropdown(item).items"
               :key="sub.label"
               :href="replaceUrlsVariables(sub.url)"
+              :target="sub.target"
+              :rel="sub.target === '_blank' ? 'noopener noreferrer' : undefined"
               class="block py-3 px-10 text-sm border-b last:border-0 text-center"
               :class="{
                 active: sub === state.activeAppLink,

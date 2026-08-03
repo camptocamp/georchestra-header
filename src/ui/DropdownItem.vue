@@ -57,6 +57,10 @@ const props = defineProps<{
           >
             <a
               :href="replaceUrlsVariables(subitem.url)"
+              :target="subitem.target"
+              :rel="
+                subitem.target === '_blank' ? 'noopener noreferrer' : undefined
+              "
               class="capitalize !flex justify-start items-start"
             >
               <img
